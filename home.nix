@@ -3,10 +3,8 @@
 , ...
 }: {
   imports = [
-    ./config/kitty/kitty.nix
-    ./config/nvim/nvim.nix
-    ./config/tmux/tmux.nix
     ./config/packages.nix
+    ./services/main.nix
   ];
 
   # Home Manager needs a bit of information about you and the paths it should
@@ -28,7 +26,7 @@
   home.file = {
     ".config/kitty".source = ./config/kitty;
     ".config/nvim".source = ./config/nvim;
-    ".config/tmux".source = ./config/tmux;
+    ".config/tmux/tmux.conf".source = ./config/tmux/tmux.conf;
   };
 
   # Home Manager can also manage your environment variables through
@@ -47,8 +45,14 @@
   #
   #  /etc/profiles/per-user/ruanb/etc/profile.d/hm-session-vars.sh
   #
+  i18n.glibcLocales = pkgs.glibcLocales.override {
+    allLocales = false;
+    locales = [ "en_ZA.UTF-8/UTF-8" ];
+  };
+
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    LANG = "en_ZA.UTF-8";
+    LC_ALL = "en_ZA.UTF-8";
   };
 
   # Let Home Manager install and manage itself.

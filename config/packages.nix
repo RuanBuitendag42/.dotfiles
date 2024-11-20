@@ -9,10 +9,21 @@
     cargo
 
     # Shell
-    unzip
-    lazygit
+    tmux
+    neovim
     github-cli
+    lazygit
+    openssh
+    unzip
 
+    # LSP
+    alejandra
+
+    # Graphics drivers
+    mesa
+    glfw
+    libglvnd
+    libGL
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
