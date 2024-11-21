@@ -23,6 +23,7 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    ".zshrc".source = ./config/zsh/zshrc;
     ".config/kitty".source = ./config/kitty;
     ".config/nvim".source = ./config/nvim;
     ".config/tmux/tmux.conf".source = ./config/tmux/tmux.conf;

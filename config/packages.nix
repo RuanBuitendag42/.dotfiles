@@ -12,10 +12,18 @@
     cargo
 
     # Shell
+    zsh-powerlevel10k
     tmux
     neovim
     github-cli
     lazygit
+    bat
+    fzf
+    zsh-fzf-tab
+    zoxide
+    eza
+
+    # Shell Utils
     unzip
 
     # SSH and WOL
@@ -31,6 +39,13 @@
     glfw
     libglvnd
     libGL
+
+    ### Work
+    awscli2
+    kubectl
+    kubectx
+    k9s
+
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of

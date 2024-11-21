@@ -1,0 +1,80 @@
+~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
+
+# Download zinit if it's not already there
+if [ ! -d $ZINIT_HOME ]; then
+  mkdir -p "$(dirname $ZINIT_HOME)"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+# Source/Load zinit
+source "''${ZINIT_HOME}/zinit.zsh"
+
+# Install P10K
+zinit ice dept=1; zinit light romkatv/powerlevel10k
+
+# Add in zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+zinit light softmoth/zsh-vim-mode
+
+# Add in snippets
+zinit snippet OMZP::git
+zinit snippet OMZP::sudo
+zinit snippet OMZP::aws
+zinit snippet OMZP::fzf
+zinit snippet OMZP::kubectl
+zinit snippet OMZP::kubectx
+zinit snippet OMZP::command-not-found
+
+zinit cdreplay -q
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+zstyle ':complete:*:*:aws' fzf-search-display
+
+# Keybindings
+# History
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+
+export EDITOR='nvim'
+export TERM='xterm-256color'
+
+# cmd utils
+'..' = "cd ..";
+ls = "eza --color";
+l = "eza -l";
+ll = "eza -la";
+c = "clear";
+cat = "bat";
+lg = "lazygit";
+icat = "kitten icat";
+v = "nvim";
+
+reload = "source ~/.zshrc";
+
+# NIXOS utils
+nhs = "nh os switch";
+nhc = "nh clean all --keep 5";
+nhsboot = "nh os boot";
+hmsw = "nh home switch";
+
+# AWS  utils
+awsRoot = "export AWS_PROFILE=\"RuanBuitendag42\"";
+awsSandbox = "export AWS_PROFILE=\"Sandbox\"";
+awsLogin = "aws sso login --sso-session RuanBuitendag42";
+awsLogout = "aws sso logout --sso-session RuanBuitendag42";
+
+chtsheet = "curl cht.sh/";
+
+# Shell integrations
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
