@@ -4,6 +4,9 @@
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "Meslo" ]; })
 
+    # Make used for initial system setup kinf of stuff
+    gnumake
+
     # Dev
     nodePackages.nodejs
     cargo
@@ -13,8 +16,12 @@
     neovim
     github-cli
     lazygit
-    openssh
     unzip
+
+    # SSH and WOL
+    openssh
+    ethtool
+    wakeonlan # For sending WoL packets
 
     # LSP
     alejandra

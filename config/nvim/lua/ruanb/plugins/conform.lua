@@ -22,6 +22,7 @@ return {
 				python = { "isort", "black" },
 				nix = { "alejandra", "nixpkgs_fmt" },
 				java = { "google_java_format" },
+				make = { "bash-language-server" }, -- Use for Makefiles
 			},
 			format_on_save = {
 				lsp_fallback = true,

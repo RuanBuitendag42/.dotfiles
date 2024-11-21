@@ -18,6 +18,7 @@ return {
 				"java",
 				"xml",
 				"yaml",
+				"make",
 			},
 			highlight = {
 				enable = true, -- Enable syntax highlighting

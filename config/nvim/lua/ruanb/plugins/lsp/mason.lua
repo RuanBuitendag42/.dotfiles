@@ -39,6 +39,7 @@ return {
 				"pyright",
 				"nil_ls",
 				"jdtls",
+				"bash-language-server", -- LSP for Makefiles
 			},
 		})
 
@@ -52,6 +53,7 @@ return {
 				"eslint_d",
 				"nixpkgs-fmt",
 				"google-java-format",
+				"checkmake", -- Linter for Makefiles
 			},
 		})
 	end,
