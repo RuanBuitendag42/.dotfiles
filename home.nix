@@ -26,6 +26,7 @@
     ".config/kitty".source = ./config/kitty;
     ".config/nvim".source = ./config/nvim;
     ".config/tmux/tmux.conf".source = ./config/tmux/tmux.conf;
+    ".config/tmux/custom_modules".source = ./config/tmux/custom_modules;
   };
 
   # Home Manager can also manage your environment variables through
