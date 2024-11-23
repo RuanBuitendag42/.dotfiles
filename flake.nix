@@ -8,11 +8,16 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     { nixpkgs
     , home-manager
+    , system-manager
     , ...
     }:
     let
@@ -29,6 +34,11 @@
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
+      };
+      systemConfigs.default = system-manager.lib.makeSystemConfig {
+        modules = [
+          ./hosts/arch
+        ];
       };
     };
 }
