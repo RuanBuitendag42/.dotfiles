@@ -6,11 +6,23 @@ setup: setup-ssh-server setup-wol
 
 # Target to set up SSH server
 setup-ssh-server:
-	./scripts/setup-ssh-server.sh
+	./scripts/ssh-server/setup-ssh-server.sh
 
 # Target to set up Wake-on-LAN
 setup-wol:
-	./scripts/setup-wol.sh
+	./scripts/ssh-server/setup-wol.sh
+
+# Update duckdns IP
+update-duckdns:
+	./scripts/ssh-server/update-duckdns.sh
+
+# Add duckdns cron
+add-duckdns-cron:
+	./scripts/ssh-server/add-duckdns-cron.sh
+
+# Remove duckdns cron
+remove-duckdns-cron:
+	./scripts/ssh-server/remove-duckdns-cron.sh
 
 # Target to clean up or reset (if needed)
 clean:

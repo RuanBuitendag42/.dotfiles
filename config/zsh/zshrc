@@ -1,4 +1,15 @@
-~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
+source ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
+
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+
+# Set the directory we want to store zinit and plugins
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
 # Download zinit if it's not already there
 if [ ! -d $ZINIT_HOME ]; then
@@ -7,7 +18,7 @@ if [ ! -d $ZINIT_HOME ]; then
 fi
 
 # Source/Load zinit
-source "''${ZINIT_HOME}/zinit.zsh"
+source "${ZINIT_HOME}/zinit.zsh"
 
 # Install P10K
 zinit ice dept=1; zinit light romkatv/powerlevel10k
@@ -28,20 +39,33 @@ zinit snippet OMZP::kubectl
 zinit snippet OMZP::kubectx
 zinit snippet OMZP::command-not-found
 
+autoload -Uz compinit && compinit
+
 zinit cdreplay -q
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# History
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-zstyle ':complete:*:*:aws' fzf-search-display
 
 # Keybindings
-# History
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
 
@@ -49,31 +73,29 @@ export EDITOR='nvim'
 export TERM='xterm-256color'
 
 # cmd utils
-'..' = "cd ..";
-ls = "eza --color";
-l = "eza -l";
-ll = "eza -la";
-c = "clear";
-cat = "bat";
-lg = "lazygit";
-icat = "kitten icat";
-v = "nvim";
+alias ls="eza --color";
+alias l="eza -l";
+alias ll="eza -la";
+alias c="clear";
+alias cat="bat";
+alias lg="lazygit";
+alias icat="kitten icat";
+alias v="nvim";
 
-reload = "source ~/.zshrc";
+alias reload="source ~/.zshrc";
 
-# NIXOS utils
-nhs = "nh os switch";
-nhc = "nh clean all --keep 5";
-nhsboot = "nh os boot";
-hmsw = "nh home switch";
+# NIX utils
+export dotfiles="~/Dev/github/ruanb/.dotfiles"
+alias smsw="nix run 'github:numtide/system-manager' -- switch --flake '${dotfiles}'"
+alias hmsw="home-manager switch --flake ${dotfiles}";
 
 # AWS  utils
-awsRoot = "export AWS_PROFILE=\"RuanBuitendag42\"";
-awsSandbox = "export AWS_PROFILE=\"Sandbox\"";
-awsLogin = "aws sso login --sso-session RuanBuitendag42";
-awsLogout = "aws sso logout --sso-session RuanBuitendag42";
+alias awsRoot="export AWS_PROFILE=\"RuanBuitendag42\"";
+alias awsSandbox="export AWS_PROFILE=\"Sandbox\"";
+alias awsLogin="aws sso login --sso-session RuanBuitendag42";
+alias awsLogout="aws sso logout --sso-session RuanBuitendag42";
 
-chtsheet = "curl cht.sh/";
+alias chtsheet="curl cht.sh/";
 
 # Shell integrations
 eval "$(fzf --zsh)"
