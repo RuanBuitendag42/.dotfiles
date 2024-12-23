@@ -1,5 +1,3 @@
-source ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -28,7 +26,7 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
-zinit light softmoth/zsh-vim-mode
+# zinit light softmoth/zsh-vim-mode
 
 # Add in snippets
 zinit snippet OMZP::git
@@ -84,11 +82,6 @@ alias v="nvim";
 
 alias reload="source ~/.zshrc";
 
-# NIX utils
-export dotfiles="~/Dev/github/ruanb/.dotfiles"
-alias smsw="nix run 'github:numtide/system-manager' -- switch --flake '${dotfiles}'"
-alias hmsw="home-manager switch --flake ${dotfiles}";
-
 # AWS  utils
 alias awsRoot="export AWS_PROFILE=\"RuanBuitendag42\"";
 alias awsSandbox="export AWS_PROFILE=\"Sandbox\"";
@@ -100,3 +93,11 @@ alias chtsheet="curl cht.sh/";
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
+
+# NVM
+source /usr/share/nvm/init-nvm.sh
+[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
+source /usr/share/nvm/nvm.sh
+source /usr/share/nvm/bash_completion
+source /usr/share/nvm/install-nvm-exec
+

@@ -24,6 +24,15 @@ add-duckdns-cron:
 remove-duckdns-cron:
 	./scripts/ssh-server/remove-duckdns-cron.sh
 
+setup-wireguard:
+	./scripts/wireguard-vpn/setup.sh
+
+generate-wg-client:
+	./scripts/wireguard-vpn/generate-keys.sh $(client)
+
+update-wg-config:
+	./scripts/wireguard-vpn/update-wg-config.sh
+
 # Target to clean up or reset (if needed)
 clean:
 	echo "No cleanup tasks defined yet!"
