@@ -69,15 +69,20 @@ bindkey '^j' down-line-or-search
 eval "$(starship init zsh)"
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+
 export EDITOR='nvim'
 export TERM='xterm-256color'
+
+export CAPACITOR_ANDROID_STUDIO_PATH='/usr/bin/android-studio'
 
 # cmd utils
 alias ls="eza --color";
 alias l="eza -l";
 alias ll="eza -la";
 alias c="clear";
-alias cat="bat";
 alias lg="lazygit";
 alias icat="kitten icat";
 alias v="nvim";
@@ -110,5 +115,19 @@ source /usr/share/nvm/init-nvm.sh
 [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
 source /usr/share/nvm/nvm.sh
 source /usr/share/nvm/bash_completion
-source /usr/share/nvm/install-nvm-exec
+# source /usr/share/nvm/install-nvm-exec
+
+
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
+
+# IONIC Completion
+if type compdef &>/dev/null; then
+  __ionic() {
+    compadd -- $(ionic completion -- "${words[@]}" 2>/dev/null)
+  }
+
+  compdef __ionic ionic
+fi
 
