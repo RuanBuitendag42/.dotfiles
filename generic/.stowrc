@@ -1,8 +1,0 @@
-# Example for generic options
---no-folding
---target=/home/ruanb
-
-# Specific excludes for Hyprland config
---ignore=.config/wip/*
---ignore=.stowrc
-

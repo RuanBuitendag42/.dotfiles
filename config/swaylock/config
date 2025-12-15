@@ -1,0 +1,57 @@
+# Swaylock - Catppuccin Macchiato
+
+# Disable virtual keyboard
+hide-keyboard-layout
+
+# Appearance
+daemonize
+show-failed-attempts
+clock
+screenshots
+effect-blur=7x5
+effect-vignette=0.5:0.5
+fade-in=0.2
+
+# Colors - Catppuccin Macchiato
+color=24273a
+
+# Ring colors
+ring-color=363a4f
+key-hl-color=a6da95
+bs-hl-color=ed8796
+
+# Inside colors  
+inside-color=24273a
+inside-clear-color=eed49f
+inside-ver-color=8aadf4
+inside-wrong-color=ed8796
+
+# Line colors
+line-color=00000000
+line-clear-color=00000000
+line-ver-color=00000000
+line-wrong-color=00000000
+
+# Text colors
+text-color=cad3f5
+text-clear-color=24273a
+text-ver-color=24273a
+text-wrong-color=24273a
+
+# Ring state colors
+ring-clear-color=eed49f
+ring-ver-color=8aadf4
+ring-wrong-color=ed8796
+
+# Font
+font=JetBrainsMono Nerd Font
+font-size=24
+
+# Indicators
+indicator
+indicator-radius=100
+indicator-thickness=10
+indicator-caps-lock
+
+# Text
+text-caps-lock-color=eed49f
