@@ -1,13 +1,15 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 36,
-    "spacing": 8,
-    "margin-top": 6,
-    "margin-left": 12,
-    "margin-right": 12,
+    "height": 42,
+    "spacing": 0,
+    "margin-top": 8,
+    "margin-left": 14,
+    "margin-right": 14,
     "modules-left": [
+        "custom/logo",
         "hyprland/workspaces",
+        "custom/separator",
         "hyprland/window"
     ],
     "modules-center": [
@@ -15,47 +17,66 @@
     ],
     "modules-right": [
         "pulseaudio",
+        "custom/separator",
         "network",
+        "custom/separator",
         "cpu",
         "memory",
+        "custom/separator",
         "battery",
         "tray",
         "custom/power"
     ],
+    "custom/logo": {
+        "format": " 侍",
+        "tooltip": false
+    },
+    "custom/separator": {
+        "format": "│",
+        "tooltip": false
+    },
     "hyprland/workspaces": {
         "format": "{icon}",
         "format-icons": {
-            "1": "一",
-            "2": "二",
-            "3": "三",
-            "4": "四",
-            "5": "五",
-            "6": "六",
-            "7": "七",
-            "8": "八",
-            "9": "九",
-            "10": "十",
+            "1": "壱",
+            "2": "弐",
+            "3": "参",
+            "4": "肆",
+            "5": "伍",
+            "6": "陸",
+            "7": "漆",
+            "8": "捌",
+            "9": "玖",
+            "10": "拾",
             "default": "󰊠",
-            "urgent": "󰀨"
+            "urgent": "⚡",
+            "active": "◉",
+            "special": "幽"
         },
         "on-click": "activate",
         "all-outputs": true,
-        "sort-by-number": true
+        "sort-by-number": true,
+        "persistent-workspaces": {
+            "*": 5
+        }
     },
     "hyprland/window": {
         "format": "{}",
-        "max-length": 60,
+        "max-length": 50,
         "separate-outputs": true,
+        "icon": true,
+        "icon-size": 18,
         "rewrite": {
-            "(.*) — Mozilla Firefox": "󰈹 $1",
-            "(.*) - Zen Browser": "󰈹 $1",
-            "(.*) - Code": "󰨞 $1",
-            "(.*) - Visual Studio Code": "󰨞 $1"
+            "(.*) — Mozilla Firefox": " $1",
+            "(.*) - Zen Browser": " $1",
+            "(.*) - Code": " $1",
+            "(.*) - Visual Studio Code": " $1",
+            "(.*)kitty": " $1"
         }
     },
     "clock": {
-        "format": "{:%H:%M  %a %d %b}",
-        "format-alt": "{:%Y-%m-%d  %H:%M:%S}",
+        "format": "  {:%H:%M}  <small>%a</small>  {:%d·%m}",
+        "format-alt": "  {:%Y年%m月%d日}  {:%H:%M:%S}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode": "year",
@@ -77,14 +98,14 @@
         }
     },
     "cpu": {
-        "interval": 10,
-        "format": " {usage}%",
+        "interval": 5,
+        "format": "処 {usage}%",
         "max-length": 10,
         "on-click": "kitty -e btop"
     },
     "memory": {
-        "interval": 30,
-        "format": " {}%",
+        "interval": 15,
+        "format": "記 {}%",
         "max-length": 10,
         "on-click": "kitty -e btop"
     },
@@ -94,31 +115,37 @@
             "critical": 15
         },
         "format": "{icon} {capacity}%",
-        "format-charging": " {capacity}%",
+        "format-charging": "⚡{capacity}%",
         "format-plugged": " {capacity}%",
         "format-alt": "{icon} {time}",
         "format-icons": [
-            "",
-            "",
-            "",
-            "",
-            ""
+            "󰂎",
+            "󰁺",
+            "󰁻",
+            "󰁼",
+            "󰁽",
+            "󰁾",
+            "󰁿",
+            "󰂀",
+            "󰂁",
+            "󰂂",
+            "󰁹"
         ]
     },
     "network": {
-        "format-wifi": " {essid}",
-        "format-ethernet": " {ipaddr}",
-        "format-disconnected": "󰤭 Disconnected",
+        "format-wifi": "  {essid}",
+        "format-ethernet": "  {ipaddr}",
+        "format-disconnected": "  切断",
         "tooltip-format": "{ifname} via {gwaddr}",
         "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
         "tooltip-format-ethernet": "{ifname} ",
-        "tooltip-format-disconnected": "Disconnected",
+        "tooltip-format-disconnected": "切断 Disconnected",
         "max-length": 50,
         "on-click": "nm-connection-editor"
     },
     "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-muted": " Muted",
+        "format": "{icon}  {volume}%",
+        "format-muted": "  消音",
         "format-icons": {
             "headphone": "",
             "hands-free": "",
@@ -135,12 +162,12 @@
         "on-click": "pavucontrol"
     },
     "tray": {
-        "icon-size": 20,
+        "icon-size": 18,
         "spacing": 8
     },
     "custom/power": {
-        "format": "⏻",
-        "tooltip": false,
+        "format": "  ",
+        "tooltip-format": "電源メニュー",
         "on-click": "~/.local/bin/powermenu.sh"
     }
 }

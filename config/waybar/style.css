@@ -1,21 +1,24 @@
-/* Waybar - Catppuccin Macchiato Theme */
+/* ═══════════════════════════════════════════════════════════════ */
+/*  侍  WAYBAR  ·  サイバーパンク武士  ·  CYBERPUNK SAMURAI       */
+/*  Catppuccin Macchiato  ·  ネオン浪人                            */
+/* ═══════════════════════════════════════════════════════════════ */
 
-/* Color definitions */
-@define-color base   #24273a;
-@define-color mantle #1e2030;
-@define-color crust  #181926;
+/* ─── Color Definitions ─────────────────────────────────────── */
+@define-color base      #24273a;
+@define-color mantle    #1e2030;
+@define-color crust     #181926;
 
-@define-color text     #cad3f5;
-@define-color subtext0 #a5adcb;
-@define-color subtext1 #b8c0e0;
+@define-color text      #cad3f5;
+@define-color subtext0  #a5adcb;
+@define-color subtext1  #b8c0e0;
 
-@define-color surface0 #363a4f;
-@define-color surface1 #494d64;
-@define-color surface2 #5b6078;
+@define-color surface0  #363a4f;
+@define-color surface1  #494d64;
+@define-color surface2  #5b6078;
 
-@define-color overlay0 #6e738d;
-@define-color overlay1 #8087a2;
-@define-color overlay2 #939ab7;
+@define-color overlay0  #6e738d;
+@define-color overlay1  #8087a2;
+@define-color overlay2  #939ab7;
 
 @define-color blue      #8aadf4;
 @define-color lavender  #b7bdf8;
@@ -32,81 +35,131 @@
 @define-color flamingo  #f0c6c6;
 @define-color rosewater #f4dbd6;
 
-/* Global styles */
+/* ─── Global ────────────────────────────────────────────────── */
 * {
-    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans CJK JP", monospace;
     font-size: 13px;
     font-weight: 600;
     min-height: 0;
+    padding: 0;
+    margin: 0;
 }
 
 window#waybar {
-    background-color: rgba(36, 39, 58, 0.95);
+    background-color: rgba(24, 25, 38, 0.75);
     color: @text;
-    border-radius: 0;
-    border: none;
+    border-radius: 14px;
+    border: 2px solid rgba(198, 160, 246, 0.25);
+    box-shadow: 0 0 12px rgba(198, 160, 246, 0.15),
+                0 0 30px rgba(198, 160, 246, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }
 
-/* Tooltip */
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/* ─── Tooltip ───────────────────────────────────────────────── */
 tooltip {
-    background: @base;
+    background: rgba(24, 25, 38, 0.9);
     border: 2px solid @mauve;
-    border-radius: 10px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(198, 160, 246, 0.3);
 }
 
 tooltip label {
     color: @text;
+    font-size: 12px;
 }
 
-/* Workspaces */
+/* ─── Logo ──────────────────────────────────────────────────── */
+#custom-logo {
+    padding: 0 14px 0 12px;
+    color: @mauve;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(198, 160, 246, 0.6),
+                 0 0 20px rgba(198, 160, 246, 0.3);
+}
+
+/* ─── Separator ─────────────────────────────────────────────── */
+#custom-separator {
+    color: rgba(198, 160, 246, 0.2);
+    padding: 0 6px;
+    font-size: 14px;
+}
+
+/* ─── Workspaces ────────────────────────────────────────────── */
 #workspaces {
-    padding: 0 5px;
+    padding: 0 4px;
 }
 
 #workspaces button {
-    padding: 0 8px;
-    margin: 0 2px;
-    color: @text;
+    padding: 0 10px;
+    margin: 4px 2px;
+    color: @overlay1;
     background-color: transparent;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    transition: all 0.3s cubic-bezier(0.22, 1.0, 0.36, 1.0);
+    font-size: 14px;
 }
 
 #workspaces button:hover {
-    background-color: @surface0;
+    background-color: rgba(198, 160, 246, 0.1);
     color: @mauve;
+    border-color: rgba(198, 160, 246, 0.3);
+    text-shadow: 0 0 6px rgba(198, 160, 246, 0.4);
 }
 
 #workspaces button.active {
-    background: linear-gradient(45deg, @mauve, @pink);
-    color: @crust;
+    background: linear-gradient(135deg, rgba(198, 160, 246, 0.2), rgba(245, 189, 230, 0.15));
+    color: @mauve;
+    border-color: @mauve;
     font-weight: bold;
+    text-shadow: 0 0 10px rgba(198, 160, 246, 0.6),
+                 0 0 25px rgba(198, 160, 246, 0.2);
+    box-shadow: 0 0 10px rgba(198, 160, 246, 0.15),
+                inset 0 0 10px rgba(198, 160, 246, 0.05);
 }
 
 #workspaces button.urgent {
-    background-color: @red;
-    color: @crust;
+    background: rgba(237, 135, 150, 0.2);
+    color: @red;
+    border-color: @red;
+    text-shadow: 0 0 8px rgba(237, 135, 150, 0.5);
+    animation: pulse-urgent 1.5s ease-in-out infinite;
 }
 
-/* Window title */
+@keyframes pulse-urgent {
+    0%, 100% { box-shadow: 0 0 5px rgba(237, 135, 150, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(237, 135, 150, 0.5); }
+}
+
+/* ─── Window Title ──────────────────────────────────────────── */
 #window {
-    margin: 0 10px;
-    padding: 0 10px;
-    color: @text;
+    margin: 0 8px;
+    padding: 0 12px;
+    color: @subtext0;
     font-weight: normal;
+    font-size: 12px;
 }
 
-/* Clock */
+/* ─── Clock ─────────────────────────────────────────────────── */
 #clock {
-    padding: 0 15px;
+    padding: 0 18px;
     margin: 4px 5px;
-    background-color: @surface0;
+    background: linear-gradient(135deg, rgba(198, 160, 246, 0.12), rgba(145, 215, 227, 0.08));
     color: @mauve;
-    border-radius: 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(198, 160, 246, 0.2);
     font-weight: bold;
+    font-size: 13px;
+    text-shadow: 0 0 6px rgba(198, 160, 246, 0.3);
+    box-shadow: 0 0 8px rgba(198, 160, 246, 0.08);
 }
 
-/* System modules */
+/* ─── System Modules (shared cyberpunk pill style) ──────────── */
 #cpu,
 #memory,
 #temperature,
@@ -114,95 +167,110 @@ tooltip label {
 #network,
 #pulseaudio {
     padding: 0 12px;
-    margin: 4px 2px;
-    background-color: @surface0;
-    border-radius: 8px;
+    margin: 4px 3px;
+    background-color: rgba(54, 58, 79, 0.5);
+    border-radius: 10px;
+    border: 1px solid transparent;
     transition: all 0.3s ease;
 }
 
+/* ── CPU ── */
 #cpu {
-    color: @blue;
+    color: @sky;
+    text-shadow: 0 0 5px rgba(145, 215, 227, 0.3);
 }
 
 #cpu:hover {
-    background-color: @blue;
-    color: @crust;
+    background: linear-gradient(135deg, rgba(145, 215, 227, 0.2), transparent);
+    border-color: rgba(145, 215, 227, 0.3);
+    box-shadow: 0 0 12px rgba(145, 215, 227, 0.15);
 }
 
+/* ── Memory ── */
 #memory {
-    color: @green;
+    color: @teal;
+    text-shadow: 0 0 5px rgba(139, 213, 202, 0.3);
 }
 
 #memory:hover {
-    background-color: @green;
-    color: @crust;
+    background: linear-gradient(135deg, rgba(139, 213, 202, 0.2), transparent);
+    border-color: rgba(139, 213, 202, 0.3);
+    box-shadow: 0 0 12px rgba(139, 213, 202, 0.15);
 }
 
-#temperature {
-    color: @peach;
-}
-
-#temperature.critical {
-    color: @red;
-    animation: blink 1s linear infinite;
-}
-
-@keyframes blink {
-    to {
-        background-color: @red;
-        color: @crust;
-    }
-}
-
-#battery {
-    color: @green;
-}
-
-#battery.charging {
-    color: @green;
-}
-
-#battery.warning:not(.charging) {
-    color: @yellow;
-}
-
-#battery.critical:not(.charging) {
-    color: @red;
-    animation: blink 1s linear infinite;
-}
-
+/* ── Network ── */
 #network {
-    color: @sky;
+    color: @blue;
+    text-shadow: 0 0 5px rgba(138, 173, 244, 0.3);
 }
 
 #network.disconnected {
     color: @red;
+    text-shadow: 0 0 8px rgba(237, 135, 150, 0.4);
 }
 
 #network:hover {
-    background-color: @sky;
-    color: @crust;
+    background: linear-gradient(135deg, rgba(138, 173, 244, 0.2), transparent);
+    border-color: rgba(138, 173, 244, 0.3);
+    box-shadow: 0 0 12px rgba(138, 173, 244, 0.15);
 }
 
+/* ── Audio ── */
 #pulseaudio {
     color: @pink;
+    text-shadow: 0 0 5px rgba(245, 189, 230, 0.3);
 }
 
 #pulseaudio.muted {
     color: @overlay0;
+    text-shadow: none;
 }
 
 #pulseaudio:hover {
-    background-color: @pink;
-    color: @crust;
+    background: linear-gradient(135deg, rgba(245, 189, 230, 0.2), transparent);
+    border-color: rgba(245, 189, 230, 0.3);
+    box-shadow: 0 0 12px rgba(245, 189, 230, 0.15);
 }
 
-/* Tray */
+/* ── Battery ── */
+#battery {
+    color: @green;
+    text-shadow: 0 0 5px rgba(166, 218, 149, 0.3);
+}
+
+#battery.charging {
+    color: @green;
+    text-shadow: 0 0 8px rgba(166, 218, 149, 0.5);
+}
+
+#battery.warning:not(.charging) {
+    color: @yellow;
+    text-shadow: 0 0 8px rgba(238, 212, 159, 0.4);
+    animation: pulse-warning 2s ease-in-out infinite;
+}
+
+#battery.critical:not(.charging) {
+    color: @red;
+    text-shadow: 0 0 10px rgba(237, 135, 150, 0.6);
+    animation: pulse-critical 1s ease-in-out infinite;
+}
+
+@keyframes pulse-warning {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+@keyframes pulse-critical {
+    0%, 100% { box-shadow: 0 0 5px rgba(237, 135, 150, 0.3); }
+    50% { box-shadow: 0 0 18px rgba(237, 135, 150, 0.6); }
+}
+
+/* ─── Tray ──────────────────────────────────────────────────── */
 #tray {
     padding: 0 10px;
     margin: 4px 5px;
-    background-color: @surface0;
-    border-radius: 8px;
+    background-color: rgba(54, 58, 79, 0.4);
+    border-radius: 10px;
 }
 
 #tray > .passive {
@@ -211,21 +279,26 @@ tooltip label {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background-color: @red;
+    background: rgba(237, 135, 150, 0.2);
+    border-radius: 8px;
 }
 
-/* Power button */
+/* ─── Power Button ──────────────────────────────────────────── */
 #custom-power {
     padding: 0 12px;
-    margin: 4px 5px;
-    background: linear-gradient(45deg, @red, @maroon);
-    color: @crust;
-    border-radius: 8px;
-    font-size: 16px;
+    margin: 4px 8px 4px 4px;
+    background: linear-gradient(135deg, rgba(237, 135, 150, 0.15), rgba(238, 153, 160, 0.1));
+    color: @red;
+    border-radius: 10px;
+    border: 1px solid rgba(237, 135, 150, 0.25);
+    font-size: 15px;
     font-weight: bold;
+    text-shadow: 0 0 8px rgba(237, 135, 150, 0.4);
     transition: all 0.3s ease;
 }
 
 #custom-power:hover {
-    background: @red;
+    background: linear-gradient(135deg, rgba(237, 135, 150, 0.3), rgba(238, 153, 160, 0.2));
+    border-color: @red;
+    box-shadow: 0 0 15px rgba(237, 135, 150, 0.3);
 }

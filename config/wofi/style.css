@@ -1,39 +1,47 @@
-/* Wofi - Catppuccin Macchiato */
+/* ═══════════════════════════════════════════════════════════════ */
+/*  侍  WOFI  ·  サイバーパンク検索  ·  CYBERPUNK LAUNCHER       */
+/*  Catppuccin Macchiato  ·  ネオン浪人                            */
+/* ═══════════════════════════════════════════════════════════════ */
 
 window {
     margin: 0px;
-    border: 3px solid #c6a0f6;
-    border-radius: 15px;
-    background-color: #24273a;
-    font-family: "JetBrainsMono Nerd Font";
+    border: 2px solid rgba(198, 160, 246, 0.4);
+    border-radius: 18px;
+    background-color: rgba(24, 25, 38, 0.85);
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans CJK JP", monospace;
     font-size: 14px;
+    box-shadow: 0 0 30px rgba(198, 160, 246, 0.15),
+                0 0 60px rgba(198, 160, 246, 0.05);
 }
 
 #input {
-    margin: 10px;
-    padding: 10px;
-    border: 2px solid #5b6078;
-    border-radius: 10px;
+    margin: 14px 14px 8px 14px;
+    padding: 12px 16px;
+    border: 2px solid rgba(198, 160, 246, 0.2);
+    border-radius: 12px;
     color: #cad3f5;
-    background-color: #363a4f;
+    background-color: rgba(54, 58, 79, 0.6);
+    font-size: 15px;
 }
 
 #input:focus {
     border: 2px solid #c6a0f6;
+    box-shadow: 0 0 12px rgba(198, 160, 246, 0.2),
+                inset 0 0 8px rgba(198, 160, 246, 0.05);
 }
 
 #inner-box {
-    margin: 10px;
-    padding: 10px;
+    margin: 4px 14px 14px 14px;
+    padding: 4px;
     border: none;
-    background-color: #24273a;
+    background-color: transparent;
 }
 
 #outer-box {
     margin: 0px;
     padding: 0px;
     border: none;
-    background-color: #24273a;
+    background-color: transparent;
 }
 
 #scroll {
@@ -43,25 +51,35 @@ window {
 }
 
 #text {
-    margin: 5px;
-    padding: 5px;
+    margin: 4px 8px;
+    padding: 4px 8px;
     border: none;
-    color: #cad3f5;
+    color: #b8c0e0;
 }
 
 #entry {
-    padding: 8px;
-    margin: 2px;
-    border-radius: 8px;
+    padding: 10px 12px;
+    margin: 3px 0;
+    border-radius: 12px;
     background-color: transparent;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
 }
 
 #entry:selected {
-    background: linear-gradient(45deg, #c6a0f6, #f5bde6);
-    color: #181926;
+    background: linear-gradient(135deg, rgba(198, 160, 246, 0.18), rgba(245, 189, 230, 0.12));
+    color: #cad3f5;
     font-weight: bold;
+    border-color: rgba(198, 160, 246, 0.35);
+    box-shadow: 0 0 12px rgba(198, 160, 246, 0.1),
+                inset 0 0 8px rgba(198, 160, 246, 0.03);
 }
 
 #entry:hover {
-    background-color: #363a4f;
+    background-color: rgba(54, 58, 79, 0.4);
+    border-color: rgba(198, 160, 246, 0.15);
+}
+
+#img {
+    margin-right: 10px;
 }

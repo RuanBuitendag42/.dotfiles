@@ -1,9 +1,14 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-# Inserts a blank line between shell prompts
+# ═══════════════════════════════════════════════════════════════
+#  侍  STARSHIP  ·  サイバーパンク  ·  CYBERPUNK SAMURAI PROMPT
+#  Catppuccin Macchiato  ·  ネオン浪人
+# ═══════════════════════════════════════════════════════════════
+
 add_newline = true
 
 format = """
+[╭─](bold mauve)\
 $username\
 $hostname\
 $kubernetes\
@@ -14,14 +19,22 @@ $git_commit\
 $git_state\
 $git_status\
 $all
-"""
+[╰─](bold mauve)$character"""
 
-# right_format = """$all"""
+right_format = """$cmd_duration"""
 
-# Duration entry
+[character]
+success_symbol = "[❯](bold mauve)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+vimcmd_replace_one_symbol = "[❮](bold mauve)"
+vimcmd_replace_symbol = "[❮](bold mauve)"
+vimcmd_visual_symbol = "[❮](bold yellow)"
+
+# Duration entry ─ 時間
 [cmd_duration]
-min_time = 10000
-format = "[󰔟 $duration](bold cyan)"
+min_time = 2000
+format = "[─ 時 $duration](bold yellow)"
 
 # Git entry
 [git_metrics]
@@ -45,7 +58,7 @@ format = '([$all_status$ahead_behind]($style))'
 
 [git_branch]
 format = '[$symbol$branch(:$remote_branch)]($style) '
-symbol = " "
+symbol = "刀 "
 
 [hg_branch]
 symbol = " "
@@ -59,11 +72,13 @@ format = "[$symbol]($style) "
 symbol = " "
 style = "bold blue"
 
-# Directory entry
+# Directory entry ─ 場所
 [directory]
 read_only = " 󰌾"
-# home_symbol = " "
-truncation_length = 3
+truncation_length = 4
+style = "bold lavender"
+format = "[$read_only]($read_only_style)[$path]($style) "
+truncation_symbol = "…/"
 
 # [directory.substitutions]
 # "Documents" = "󰈙 "

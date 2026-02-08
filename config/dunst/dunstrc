@@ -1,4 +1,7 @@
-# Dunst - Catppuccin Macchiato
+# ═══════════════════════════════════════════════════════════════
+#  侍  DUNST  ·  サイバーパンク通知  ·  CYBERPUNK NOTIFICATIONS
+#  Catppuccin Macchiato  ·  ネオン浪人
+# ═══════════════════════════════════════════════════════════════
 
 [global]
     # Display
@@ -6,35 +9,37 @@
     follow = mouse
     
     # Geometry
-    width = (200, 400)
+    width = (250, 420)
     height = 300
     origin = top-right
-    offset = 20x50
+    offset = 20x60
     scale = 0
     notification_limit = 5
     
     # Progress bar
     progress_bar = true
-    progress_bar_height = 10
+    progress_bar_height = 12
     progress_bar_frame_width = 1
     progress_bar_min_width = 150
     progress_bar_max_width = 300
+    progress_bar_corner_radius = 4
     
     # Appearance
-    separator_height = 2
-    padding = 15
-    horizontal_padding = 15
-    text_icon_padding = 15
-    frame_width = 3
+    separator_height = 3
+    padding = 18
+    horizontal_padding = 18
+    text_icon_padding = 18
+    frame_width = 2
     frame_color = "#c6a0f6"
     separator_color = frame
     sort = yes
+    corner_radius = 16
     
     # Text
     font = JetBrainsMono Nerd Font 12
-    line_height = 0
+    line_height = 4
     markup = full
-    format = "<b>%s</b>\n%b"
+    format = "<b>%s</b>\n<i>%b</i>"
     alignment = left
     vertical_alignment = center
     show_age_threshold = 60
@@ -50,10 +55,11 @@
     min_icon_size = 32
     max_icon_size = 64
     icon_path = /usr/share/icons/Papirus-Dark/16x16/status/:/usr/share/icons/Papirus-Dark/16x16/devices/
+    icon_corner_radius = 8
     
     # History
     sticky_history = yes
-    history_length = 20
+    history_length = 30
     
     # Misc
     dmenu = /usr/bin/wofi -p dunst:
@@ -61,8 +67,8 @@
     always_run_script = true
     title = Dunst
     class = Dunst
-    corner_radius = 12
     ignore_dbusclose = false
+    transparency = 15
     
     # Mouse
     mouse_left_click = close_current
@@ -70,30 +76,54 @@
     mouse_right_click = close_all
 
 [urgency_low]
-    background = "#24273a"
-    foreground = "#cad3f5"
-    frame_color = "#8aadf4"
+    background = "#1e203080"
+    foreground = "#a5adcb"
+    frame_color = "#494d64"
+    highlight = "#8aadf4"
     timeout = 5
+    format = "<b>%s</b>\n%b"
     
 [urgency_normal]
-    background = "#24273a"
+    background = "#24273a90"
     foreground = "#cad3f5"
     frame_color = "#c6a0f6"
+    highlight = "#c6a0f6"
     timeout = 10
+    format = "<b>%s</b>\n%b"
     
 [urgency_critical]
-    background = "#24273a"
+    background = "#24273aCC"
     foreground = "#cad3f5"
     frame_color = "#ed8796"
+    highlight = "#ed8796"
     timeout = 0
+    format = "<b>⚠ %s</b>\n%b"
 
-# Application-specific rules
+# ─── Application Rules ─────────────────────────────────────────
+
 [discord]
     appname = discord
     frame_color = "#8aadf4"
-    format = "<b>Discord</b>\n%s\n%b"
+    format = "<b>  Discord</b>\n%s\n%b"
 
 [spotify]
     appname = Spotify
     frame_color = "#a6da95"
-    format = "<b>Spotify</b>\n%s\n%b"
+    format = "<b>  Spotify</b>\n%s\n%b"
+
+[volume]
+    appname = "volume"
+    frame_color = "#f5bde6"
+    format = "<b>  音量</b>\n%b"
+    history_ignore = yes
+
+[brightness]
+    appname = "brightness"
+    frame_color = "#eed49f"
+    format = "<b>  輝度</b>\n%b"
+    history_ignore = yes
+
+[screenshot]
+    appname = "screenshot"
+    frame_color = "#91d7e3"
+    format = "<b>  撮影</b>\n%b"
