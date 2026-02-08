@@ -204,9 +204,13 @@ downgrade
 pacman-contrib
 rebuild-detector
 yq
+zoxide
 
 # Development
+arduino-cli
 neovim
+nvm
+pyenv
 python
 python-packaging
 python-pillow
