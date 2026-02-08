@@ -1,8 +1,8 @@
 # 🎨 .dotfiles
 
-> Personal development environment for EndeavourOS (Arch-based Linux)
+> Personal development environment for Arch Linux
 
-Clean, organized, and automated dotfiles managed with GNU Stow. Focus on modern CLI tools, efficient workflows, and easy setup.
+Clean, organized, and automated dotfiles managed with GNU Stow. Full system reproducibility with package lists, Hyprland DE, and Catppuccin Macchiato everywhere.
 
 ---
 
@@ -80,18 +80,6 @@ cd .dotfiles
 make install
 ```
 
-### 4. Optional: System Setup
-
-```bash
-# Network services (SSH, WireGuard, Wake-on-LAN)
-make setup-network
-
-# Or individually:
-make setup-ssh
-make setup-wol
-make setup-wireguard
-```
-
 ---
 
 ## 🛠️ What's Included
@@ -134,7 +122,7 @@ make setup-wireguard
 
 **btop** - System monitor with Catppuccin themes  
 **yazi** - Modern terminal file manager  
-**Nushell** - Alternative shell with structured data
+**lazydocker** - Docker TUI
 
 ### 🎨 Theming
 
@@ -152,54 +140,41 @@ Run `make help` for full list. Common commands:
 ```bash
 make install         # Deploy all configs and scripts
 make install-configs # Deploy application configs only
-make setup-network   # Configure SSH + WireGuard + WOL
+make install-home    # Deploy home dotfiles only
+make install-scripts # Deploy scripts only
+make packages-save   # Save installed packages to repo
+make packages-diff   # Show diff between installed and saved
 make test           # Test configuration validity
 make status         # Show deployment status
 make backup         # Backup existing configs
 make clean          # Remove deployed symlinks
-```
-
-### Network Automation
-
-```bash
-make setup-ssh              # Setup SSH server
-make setup-wol              # Configure Wake-on-LAN
-make setup-wireguard        # Setup WireGuard VPN server
-make generate-wg-client CLIENT=laptop  # Generate WireGuard client config
-make update-duckdns         # Update DuckDNS IP
-make add-duckdns-cron       # Add DuckDNS auto-update cron
+make orphans        # Remove orphan packages
 ```
 
 ---
 
-## 🖥️ Hyprland Setup
+## 🖥️ Hyprland DE
 
-Want to use Hyprland as your window manager? Check out the comprehensive guide:
+Hyprland is the active window manager, fully configured with Catppuccin Macchiato:
 
-```bash
-cat hyprland/README.md
-```
+- **Hyprland** + Hypridle + Hyprlock
+- **Waybar** with Japanese kanji workspace icons (一二三四五六七八九十)
+- **Wofi** launcher, **Dunst** notifications
+- **Swaylock** with blur effects
+- **Scripts**: Power menu, wallpaper manager, resolution switcher
 
-The guide includes:
-- Fresh installation steps (not HyDe configs)
-- Complete package list
-- Minimal starter configuration
-- Waybar setup
-- Customization roadmap
+See [HYPRLAND.md](HYPRLAND.md) for key bindings and configuration details.
 
 ---
 
-## 🎯 EndeavourOS vs Pure Arch
+## 🎯 Arch Linux Compatibility
 
-**You don't need pure Arch!** EndeavourOS is 100% compatible with these dotfiles:
+These dotfiles target **pure Arch Linux**. The package lists in `packages/` contain only
+standard Arch and AUR packages — no distro-specific dependencies.
 
-- ✅ Same package manager (pacman/yay)
-- ✅ Same AUR access
-- ✅ Same config locations
-- ✅ Better hardware support out-of-box
-- ✅ More stable base
-
-These dotfiles work identically on both distributions.
+- ✅ Works on pure Arch, EndeavourOS, or any Arch-based distro
+- ✅ `setup.sh` handles full system setup from scratch
+- ✅ `make packages-save` / `make packages-diff` for package tracking
 
 ---
 
@@ -223,10 +198,9 @@ stow -v -t ~/.config .
 cd ~/.dotfiles/home
 stow -v -t ~ .
 
-# Install scripts
-mkdir -p ~/.local/bin
-cp scripts/network/*.sh ~/.local/bin/
-chmod +x ~/.local/bin/*.sh
+# Deploy scripts
+cd ~/.dotfiles/scripts
+stow -v -t ~ .
 ```
 
 ### Method 3: Selective Deployment
@@ -291,22 +265,13 @@ Features:
 
 ## 🤖 Automation Scripts
 
-All scripts located in `scripts/network/`:
+All scripts deployed to `~/.local/bin/` via stow:
 
-### SSH Server
-- `setup-ssh-server.sh` - Configure SSH server with security
-- `setup-wol.sh` - Enable Wake-on-LAN
+- `powermenu.sh` - Wofi-based power menu (lock, logout, suspend, reboot, shutdown)
+- `wallpaper.sh` - Random wallpaper setter (swww)
+- `resolution.sh` - Quick resolution switcher
 
-### DuckDNS Integration
-- `update-duckdns.sh` - Update your DuckDNS IP
-- `add-duckdns-cron.sh` - Auto-update via cron
-- `remove-duckdns-cron.sh` - Remove cron job
-
-### WireGuard VPN
-- `setup.sh` - Setup WireGuard server
-- `generate-keys.sh` - Generate client keys
-- `update-wg-config.sh` - Update server config
-- `client-template.conf` - Client config template
+Deploy with `make install-scripts`.
 
 ---
 
@@ -352,7 +317,8 @@ make test
 ## 📚 Additional Documentation
 
 - **[PROJECT_SETUP.md](PROJECT_SETUP.md)** - Complete setup guide for fresh systems
-- **[hyprland/README.md](hyprland/README.md)** - Hyprland installation and configuration
+- **[HYPRLAND.md](HYPRLAND.md)** - Hyprland configuration and key bindings
+- **[THEMES.md](THEMES.md)** - Catppuccin Macchiato color reference
 - **[TERMINAL_COMPARISON.md](TERMINAL_COMPARISON.md)** - Kitty vs Ghostty analysis
 
 ---

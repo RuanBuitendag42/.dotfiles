@@ -18,7 +18,9 @@ All configured with Catppuccin Macchiato colors:
 ```
 config/
 ├── hypr/           → ~/.config/hypr/
-│   └── hyprland.conf
+│   ├── hyprland.conf
+│   ├── hypridle.conf
+│   └── hyprlock.conf
 ├── waybar/         → ~/.config/waybar/
 │   ├── config
 │   └── style.css
@@ -30,8 +32,10 @@ config/
 └── swaylock/       → ~/.config/swaylock/
     └── config
 
-scripts/hyprland/   → ~/.local/bin/
-└── wallpaper.sh
+scripts/.local/bin/
+├── powermenu.sh    # Wofi-based power menu
+├── wallpaper.sh    # Wallpaper manager (swww)
+└── resolution.sh   # Resolution switcher
 ```
 
 ## 🚀 Installation
@@ -48,25 +52,24 @@ When prompted, choose to install Hyprland.
 
 ```bash
 # 1. Install dependencies (if not already installed)
-sudo pacman -S hyprland waybar wofi dunst swww grim slurp \
-    wl-clipboard cliphist swayidle xdg-desktop-portal-hyprland \
-    polkit-kde-agent thunar network-manager-applet blueman \
+sudo pacman -S hyprland hypridle hyprlock waybar wofi dunst swww grim slurp satty \
+    wl-clipboard cliphist xdg-desktop-portal-hyprland \
+    polkit-gnome nemo network-manager-applet blueman \
     pavucontrol qt5ct qt6ct kvantum papirus-icon-theme \
-    brightnessctl playerctl
+    brightnessctl playerctl nwg-look
 
-yay -S swaylock-effects
+yay -S swaylock-effects pyprland
 
 # 2. Deploy configs with stow
 cd ~/.dotfiles/config
-stow -v -t ~/.config hypr waybar wofi dunst swaylock
+stow -v -t ~/.config .
 
-# 3. Install scripts
-mkdir -p ~/.local/bin
-cp ~/.dotfiles/scripts/hyprland/*.sh ~/.local/bin/
-chmod +x ~/.local/bin/*.sh
+# 3. Deploy scripts
+cd ~/.dotfiles/scripts
+stow -v -t ~ .
 
 # 4. Create required directories
-mkdir -p ~/Pictures/Wallpapers ~/Pictures/Screenshots
+mkdir -p ~/pictures/wallpapers ~/pictures/screenshots
 ```
 
 ## ⌨️ Key Bindings
@@ -76,20 +79,28 @@ mkdir -p ~/Pictures/Wallpapers ~/Pictures/Screenshots
 | Key | Action |
 |-----|--------|
 | `SUPER + Q` | Kill active window |
-| `SUPER + M` | Exit Hyprland |
 | `SUPER + V` | Toggle floating |
-| `SUPER + P` | Toggle pseudo-tiling |
-| `SUPER + J` | Toggle split direction |
-| `SUPER + F` | Toggle fullscreen |
+| `SUPER + F` | Fullscreen |
+| `SUPER + SHIFT + F` | Maximize (keep bar) |
+| `SUPER + P` | Pseudo-tiling |
+| `SUPER + T` | Toggle split direction |
+| `SUPER + G` | Toggle group |
+| `ALT + TAB` | Focus last window |
 
 ### Applications
 
 | Key | Action |
 |-----|--------|
-| `SUPER + RETURN` | Launch Kitty terminal |
-| `SUPER + E` | Launch Thunar file manager |
-| `SUPER + D` | Launch Wofi launcher |
-| `SUPER + L` | Lock screen (swaylock) |
+| `SUPER + RETURN` | Kitty terminal |
+| `SUPER + E` | Nemo file manager |
+| `SUPER + D` | Wofi launcher |
+| `SUPER + B` | Zen Browser |
+| `SUPER + C` | VS Code |
+| `SUPER + Y` | Clipboard history (cliphist) |
+| `SUPER + ESCAPE` | Lock screen (hyprlock) |
+| `SUPER + M` | Power menu |
+| `SUPER + CTRL + M` | Exit Hyprland (emergency) |
+| `SUPER + SHIFT + R` | Reload Hyprland |
 
 ### Window Navigation (Vim-style)
 
@@ -97,7 +108,7 @@ mkdir -p ~/Pictures/Wallpapers ~/Pictures/Screenshots
 |-----|--------|
 | `SUPER + H/J/K/L` | Move focus |
 | `SUPER + SHIFT + H/J/K/L` | Move window |
-| `SUPER + CTRL + H/J/K/L` | Resize window |
+| `SUPER + R` | Enter resize mode (HJKL/arrows, ESC to exit) |
 
 ### Window Navigation (Arrows)
 
@@ -121,8 +132,10 @@ mkdir -p ~/Pictures/Wallpapers ~/Pictures/Screenshots
 
 | Key | Action |
 |-----|--------|
-| `SUPER + SHIFT + S` | Screenshot area |
-| `PRINT` | Screenshot full screen |
+| `PRINT` | Screenshot area (edit in Satty) |
+| `SHIFT + PRINT` | Screenshot full screen (edit in Satty) |
+| `SUPER + PRINT` | Screenshot area to clipboard |
+| `SUPER + SHIFT + PRINT` | Screenshot full screen to file |
 
 ### Media Controls
 
@@ -157,7 +170,7 @@ See [THEMES.md](THEMES.md) for complete color reference.
 
 ## 🖼️ Wallpapers
 
-Place wallpapers in `~/Pictures/Wallpapers/`:
+Place wallpapers in `~/pictures/wallpapers/`:
 
 ```bash
 # Set random wallpaper
@@ -183,10 +196,12 @@ animation = workspaces, 1, 6, default
 
 ### Window Rules
 
+Hyprland 0.53+ uses the new `windowrule` syntax with `match:` specifiers:
+
 ```conf
-windowrule = float, ^(pavucontrol)$
-windowrule = float, ^(nm-connection-editor)$
-windowrulev2 = opacity 0.9, class:^(kitty)$
+windowrule = float on, match:class pavucontrol
+windowrule = float on, match:class nm-connection-editor
+windowrule = opacity 0.92 0.88, match:class kitty
 ```
 
 ### Startup Applications
@@ -194,9 +209,10 @@ windowrulev2 = opacity 0.9, class:^(kitty)$
 ```conf
 exec-once = waybar
 exec-once = dunst
-exec-once = /usr/lib/polkit-kde-authentication-agent-1
+exec-once = /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec-once = nm-applet
 exec-once = blueman-applet
+exec-once = hypridle
 ```
 
 ## 🐛 Troubleshooting

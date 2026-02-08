@@ -54,14 +54,13 @@ Text Colors:
 - **Neovim** - LazyVim with Catppuccin Macchiato
 - **Tmux** - Catppuccin Macchiato statusline
 - **btop** - Macchiato theme available
-
-### 🔧 To Configure
-
-- **Hyprland** - Will use Macchiato throughout
-- **Waybar** - Macchiato colors
-- **Wofi** - Macchiato launcher theme
-- **Dunst** - Macchiato notifications
-- **GTK Theme** - Catppuccin Macchiato
+- **Hyprland** - Full Macchiato colors (borders, shadows)
+- **Waybar** - Macchiato status bar with styled modules
+- **Wofi** - Macchiato application launcher
+- **Dunst** - Macchiato notification styling
+- **Swaylock** - Macchiato lock screen
+- **Hyprlock** - Macchiato lock screen (alternative)
+- **GTK Theme** - Catppuccin Macchiato GTK + cursors (AUR)
 
 ---
 

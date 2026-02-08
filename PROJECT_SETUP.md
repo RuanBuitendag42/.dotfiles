@@ -1,8 +1,12 @@
 # 🚀 Project Setup Instructions
 
-Complete guide for setting up your dotfiles on a fresh EndeavourOS or Arch Linux system.
+Complete guide for setting up your dotfiles on a fresh Arch Linux system.
 
 **Estimated Time**: 30-45 minutes
+
+> **Quick option**: Run `./setup.sh` for a fully automated setup that installs all packages
+> from `packages/pacman.txt` and `packages/aur.txt`, deploys configs, and configures services.
+> The steps below are for manual setup.
 
 ---
 
@@ -13,20 +17,17 @@ Complete guide for setting up your dotfiles on a fresh EndeavourOS or Arch Linux
 3. [Install Dependencies](#install-dependencies)
 4. [Clone and Deploy Dotfiles](#clone-and-deploy-dotfiles)
 5. [Post-Installation](#post-installation)
-6. [Optional: Network Services](#optional-network-services)
-7. [Optional: Hyprland](#optional-hyprland)
-8. [Verification](#verification)
-9. [Troubleshooting](#troubleshooting)
+6. [Optional: Hyprland](#optional-hyprland)
+7. [Verification](#verification)
+8. [Troubleshooting](#troubleshooting)
 
 ---
 
 ## System Requirements
 
-- **OS**: EndeavourOS or Arch Linux
+- **OS**: Arch Linux (or any Arch-based distro)
 - **Internet**: Required for package installation
 - **User**: Non-root user with sudo privileges
-
-**Note**: These dotfiles work identically on EndeavourOS and pure Arch Linux.
 
 ---
 
@@ -73,7 +74,7 @@ sudo pacman -S zsh
 sudo pacman -S starship
 
 # Modern CLI tools
-sudo pacman -S eza fzf bat ripgrep fd
+sudo pacman -S eza fzf ripgrep fd zoxide yq
 
 # Terminal emulator
 sudo pacman -S kitty
@@ -85,8 +86,7 @@ sudo pacman -S neovim
 sudo pacman -S tmux
 
 # System tools
-sudo pacman -S btop lazygit
-yay -S yazi-bin
+sudo pacman -S btop lazygit yazi
 ```
 
 ### Set ZSH as Default Shell
@@ -185,88 +185,31 @@ Should show:
 
 ---
 
-## 5. Optional: Network Services
-
-Setup SSH server, WireGuard VPN, and Wake-on-LAN.
-
-### Quick Setup (All Services)
-
-```bash
-make setup-network
-```
-
-### Individual Setup
-
-#### SSH Server
-
-```bash
-make setup-ssh
-```
-
-This configures:
-- SSH server with security hardening
-- Firewall rules
-- DuckDNS integration
-
-#### Wake-on-LAN
-
-```bash
-make setup-wol
-```
-
-Enables WOL for remote system wake.
-
-#### WireGuard VPN Server
-
-```bash
-make setup-wireguard
-```
-
-Setup VPN server with:
-- Key generation
-- Server configuration
-- Firewall rules
-
-**Generate client config:**
-```bash
-make generate-wg-client CLIENT=laptop
-```
-
-#### DuckDNS Auto-Update
-
-```bash
-make add-duckdns-cron
-```
-
-Automatically updates your DuckDNS IP address.
-
----
-
-## 6. Optional: Hyprland
+## 5. Optional: Hyprland
 
 Want to use Hyprland as your Wayland compositor?
 
 ### Read the Guide
 
-```bash
-cat hyprland/README.md
-```
+See [HYPRLAND.md](HYPRLAND.md) for complete configuration details.
 
 ### Quick Hyprland Install
 
 ```bash
 # Install Hyprland and dependencies
-sudo pacman -S hyprland waybar wofi dunst swww grim slurp \
-    wl-clipboard cliphist swaylock-effects swayidle \
-    xdg-desktop-portal-hyprland
+sudo pacman -S hyprland hypridle hyprlock waybar wofi dunst swww grim slurp satty \
+    wl-clipboard cliphist xdg-desktop-portal-hyprland
 
-# Follow hyprland/README.md for configuration
+# Deploy all configs (includes Hyprland)
+make install
 ```
 
-The guide provides:
-- Complete package list
-- Minimal starter config
-- Customization roadmap
+Hyprland is fully configured in this repo with:
+- Catppuccin Macchiato theme
+- Waybar with Japanese kanji workspace icons
+- Wofi launcher, Dunst notifications
+- Hyprlock + Hypridle for lock/idle
+- Power menu, wallpaper, and resolution scripts
 - Troubleshooting tips
 
 ---
@@ -410,12 +353,12 @@ make install
 
 ### Permission Denied on Scripts
 
-**Problem**: Scripts in `scripts/network/` won't execute.
+**Problem**: Scripts in `scripts/.local/bin/` won't execute.
 
 **Solution**:
 ```bash
 # Make all scripts executable
-chmod +x ~/.dotfiles/scripts/network/*.sh
+chmod +x ~/.dotfiles/scripts/.local/bin/*.sh
 chmod +x ~/.local/bin/*.sh
 ```
 
@@ -436,8 +379,6 @@ After successful setup:
    - Customize tmux status bar
 
 3. **Optional Features**:
-   - Setup Hyprland (see `hyprland/README.md`)
-   - Configure network services
    - Test Ghostty terminal (see `TERMINAL_COMPARISON.md`)
 
 4. **Stay Updated**:
@@ -452,7 +393,8 @@ After successful setup:
 ## 📚 Additional Resources
 
 - **README.md** - Quick overview and usage
-- **hyprland/README.md** - Hyprland setup guide
+- **HYPRLAND.md** - Hyprland configuration and key bindings
+- **THEMES.md** - Catppuccin Macchiato reference
 - **TERMINAL_COMPARISON.md** - Kitty vs Ghostty
 - **Makefile** - Run `make help` for commands
 
@@ -519,8 +461,7 @@ Use this to track your setup progress:
 - [ ] ZSH plugins loaded
 - [ ] Tmux working
 - [ ] All tests passing
-- [ ] Optional: Network services configured
-- [ ] Optional: Hyprland installed
+- [ ] Optional: Hyprland configured
 
 ---
 

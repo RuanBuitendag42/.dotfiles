@@ -5,15 +5,17 @@ applyTo: '**'
 
 ## Project Overview
 
-This is a personal dotfiles repository for EndeavourOS (Arch-based Linux). It contains:
-- Shell configurations (ZSH with zinit)
+This is a personal dotfiles repository for Arch Linux. It contains:
+- Shell configurations (ZSH with zinit + Starship prompt)
 - Application configs (Neovim, Kitty, Tmux, etc.)
-- System automation scripts (SSH, WireGuard, WOL)
-- Hyprland setup guide (starting fresh, not HyDe configs)
+- Hyprland DE (fully configured with Catppuccin Macchiato)
+- Package lists for full system reproducibility
+- Automation scripts (power menu, wallpaper, resolution)
 
 **Owner**: Ruan Buitendag (@RuanBuitendag42)  
-**System**: EndeavourOS (Arch-based)  
-**Deployment**: GNU Stow for symlink management
+**System**: Arch Linux (currently EndeavourOS, targeting pure Arch)  
+**Deployment**: GNU Stow for symlink management  
+**Shell**: ZSH (default) with zinit + Starship prompt
 
 ## Repository Structure
 
@@ -21,22 +23,29 @@ This is a personal dotfiles repository for EndeavourOS (Arch-based Linux). It co
 .dotfiles/
 ├── config/              # XDG_CONFIG_HOME apps (~/.config/)
 │   ├── btop/           # System monitor
+│   ├── dunst/          # Notification daemon
+│   ├── hypr/           # Hyprland + Hypridle + Hyprlock
 │   ├── kitty/          # Terminal (primary)
 │   ├── nvim/           # LazyVim-based setup
 │   ├── nushell/        # Alternative shell
 │   ├── starship/       # Shell prompt
+│   ├── swaylock/       # Lock screen
 │   ├── tmux/           # Terminal multiplexer
+│   ├── waybar/         # Status bar
+│   ├── wofi/           # Application launcher
 │   └── yazi/           # File manager
-├── home/               # Home directory dotfiles (~/)
-│   └── .zshrc          # ZSH configuration
+├── home/               # Home directory dotfiles (~/.zshrc)
+├── packages/           # Package lists for system reproduction
+│   ├── pacman.txt      # Native packages (categorized)
+│   └── aur.txt         # AUR packages
 ├── scripts/            # Automation scripts
-│   ├── network/        # SSH, WireGuard, DuckDNS
-│   └── system/         # System utilities (empty currently)
-├── hyprland/           # Hyprland setup documentation
-│   └── README.md       # Fresh Hyprland guide (not HyDe)
+│   └── .local/bin/     # powermenu.sh, wallpaper.sh, resolution.sh
 ├── Makefile            # Main automation interface
+├── setup.sh            # Full system setup from scratch
 ├── README.md           # Project overview
+├── HYPRLAND.md         # Hyprland configuration docs
 ├── PROJECT_SETUP.md    # Detailed setup guide
+├── THEMES.md           # Catppuccin Macchiato reference
 └── TERMINAL_COMPARISON.md  # Kitty vs Ghostty analysis
 ```
 
@@ -48,9 +57,11 @@ This is a personal dotfiles repository for EndeavourOS (Arch-based Linux). It co
 - **Rationale**: EndeavourOS IS Arch, no need for distro separation
 
 ### 2. Hyprland Approach
-- **Previous**: Incomplete HyDe configs in `generic/.config/wip/hypr/`
-- **Current**: Clean slate with comprehensive guide in `hyprland/README.md`
-- **Rationale**: Start fresh with understanding, not copied configs
+- **Previous**: Incomplete HyDe configs
+- **Current**: Fully configured Hyprland DE with Catppuccin Macchiato
+- **Includes**: hyprland.conf, hypridle.conf, hyprlock.conf, waybar, wofi, dunst, swaylock
+- **Scripts**: powermenu.sh, wallpaper.sh, resolution.sh
+- **Window rules**: Using Hyprland 0.53+ `windowrule` syntax with `match:class`
 
 ### 3. Terminal Choice
 - **Primary**: Kitty (currently installed, proven stable)
@@ -61,10 +72,12 @@ This is a personal dotfiles repository for EndeavourOS (Arch-based Linux). It co
 ### 4. Deployment Method
 - **Tool**: GNU Stow for symlink management
 - **Wrapper**: Makefile for user-friendly interface
+- **Package management**: `packages/pacman.txt` + `packages/aur.txt`
+- **Full setup**: `setup.sh` for complete system reproduction
 - **Method**: 
   - `config/` → `~/.config/` (via stow)
   - `home/` → `~/` (via stow)
-  - `scripts/` → `~/.local/bin/` (via cp)
+  - `scripts/` → `~/.local/bin/` (via stow)
 
 ## Configuration Management
 
@@ -92,7 +105,7 @@ When adding a new application config:
 
 ### Modifying Scripts
 
-All automation scripts in `scripts/network/`:
+All automation scripts in `scripts/.local/bin/`:
 
 1. Keep bash scripts with `.sh` extension
 2. Include usage documentation in script header
@@ -132,11 +145,12 @@ This is the MOST important aspect - Macchiato theme must be used in ALL configur
 ### User Preferences
 
 1. **Theme**: **CATPPUCCIN MACCHIATO EVERYWHERE!** This is CRITICAL - all configs must use Macchiato
-2. **Hyprland**: Full configuration ready, not deployed yet
+2. **Hyprland**: Fully configured and deployed as active DE
 3. **Terminal**: Kitty (23x faster than Ghostty - benchmarked!)
-4. **Shell**: ZSH with Starship prompt, not bash
+4. **Shell**: ZSH with Starship prompt (not fish, not bash)
 5. **Editor**: Neovim with LazyVim, uses Copilot
 6. **Automation**: Loves Makefiles for easy commands
+7. **System reproduction**: Package lists in `packages/` for carbon copy installs
 
 ### Pain Points Solved
 
@@ -147,6 +161,9 @@ This is the MOST important aspect - Macchiato theme must be used in ALL configur
 5. ✅ Kitty vs Ghostty - Kitty wins (benchmarked 23x faster)
 6. ✅ Outdated network scripts removed
 7. ✅ Theme preferences documented (Macchiato EVERYWHERE!)
+8. ✅ Fish shell removed, ZSH set as default
+9. ✅ EndeavourOS-specific packages removed from lists
+10. ✅ Full system reproducibility via packages/ + setup.sh
 
 ## Development Guidelines
 
@@ -174,7 +191,8 @@ set -e  # Exit on error
 
 - **README.md**: Overview, quick start, what's included
 - **PROJECT_SETUP.md**: Step-by-step fresh install guide
-- **Component READMEs**: Specific setup (like hyprland/)
+- **HYPRLAND.md**: Hyprland DE configuration and key bindings
+- **THEMES.md**: Catppuccin Macchiato color reference
 - **Comparison docs**: Analysis and recommendations
 
 ## Common Tasks
@@ -226,7 +244,7 @@ make install-configs
 
 ```bash
 # Fix permissions
-chmod +x scripts/network/*.sh
+chmod +x scripts/.local/bin/*.sh
 make install-scripts
 ```
 
@@ -258,9 +276,10 @@ make install-scripts
 ### What to Commit
 
 ✅ Configuration files
-✅ Scripts (network/, system/)
+✅ Scripts (.local/bin/)
 ✅ Documentation (*.md)
 ✅ Makefile
+✅ Package lists (packages/)
 
 ❌ `.gitignore` from Neovim (it has its own)
 ❌ Lazy-lock.json changes (unless intentional)
@@ -283,11 +302,9 @@ chore: remove incomplete HyDe configs
 
 Potential additions:
 
-1. **Hyprland configs** - After following guide and customizing
-2. **Ghostty config** - If performance tests are positive
-3. **System scripts** - Additional automation in `scripts/system/`
-4. **CI/CD** - Automated testing of configs
-5. **Installation script** - Single-command full setup
+1. **Ghostty config** - If performance tests are positive
+2. **CI/CD** - Automated testing of configs
+3. **Additional scripts** - More automation in `scripts/.local/bin/`
 
 ## Notes for Copilot
 
@@ -295,7 +312,8 @@ Potential additions:
 - Prefer implementing over suggesting
 - Use Makefile commands in examples
 - Remember: EndeavourOS = Arch, no special handling needed
-- Hyprland is aspirational, not current setup
+- Package lists in packages/ should NOT include EndeavourOS-specific packages
+- Hyprland IS the current active DE, fully configured
 - Kitty is primary terminal, Ghostty is optional curiosity
 - All automation should be idempotent and safe to re-run
 
@@ -314,9 +332,9 @@ When working on this repository:
 **Files to keep:**
 - README.md (main overview)
 - PROJECT_SETUP.md (setup guide)
+- HYPRLAND.md (Hyprland config docs)
 - THEMES.md (Catppuccin Macchiato reference)
 - TERMINAL_COMPARISON.md (Kitty vs Ghostty)
-- hyprland/README.md (Hyprland guide)
 - .github/copilot-instructions.md (this file)
 
 **Files to remove:**

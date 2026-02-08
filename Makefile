@@ -1,5 +1,5 @@
 # Makefile for dotfiles automation
-# EndeavourOS / Arch Linux
+# Arch Linux
 SHELL := /bin/bash
 
 .PHONY: help install install-configs install-scripts backup status test clean update migrate packages-save packages-diff
