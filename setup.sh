@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # setup.sh - Full system setup from scratch
-# Reproduces a complete EndeavourOS environment from this repo
+# Reproduces a complete Arch Linux environment from this repo
 # Usage: ./setup.sh [--minimal] [--no-aur] [--no-hyprland]
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -263,7 +263,7 @@ echo ""
 echo -e "${GREEN}${BOLD}━━━ Setup Complete! ━━━${NC}"
 echo ""
 echo -e "  ${BOLD}What was installed:${NC}"
-echo "    Shells:     ZSH + Fish + Starship prompt"
+echo "    Shells:     ZSH + Starship prompt"
 echo "    Terminal:   Kitty (Catppuccin Macchiato)"
 echo "    Editor:     Neovim (LazyVim) + VS Code"
 echo "    Tmux:       Catppuccin Macchiato + TPM"

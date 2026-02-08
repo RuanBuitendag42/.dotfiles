@@ -8,7 +8,6 @@ linux-lts-headers
 linux-firmware
 amd-ucode
 dracut
-eos-dracut
 efibootmgr
 efitools
 grub
@@ -28,20 +27,6 @@ dmraid
 device-mapper
 mdadm
 
-# EndeavourOS
-dmidecode
-endeavouros-branding
-endeavouros-keyring
-endeavouros-konsole-colors
-endeavouros-mirrorlist
-eos-apps-info
-eos-hooks
-eos-log-tool
-eos-packagelist
-eos-quickstart
-eos-rankmirrors
-eos-settings-plasma
-eos-breeze-sddm
 
 # Networking
 networkmanager
@@ -178,7 +163,6 @@ kvantum-qt5
 kitty
 ghostty
 zsh
-fish
 starship
 tmux
 
@@ -215,7 +199,6 @@ unzip
 meld
 diffutils
 reflector
-reflector-simple
 pkgfile
 downgrade
 pacman-contrib
@@ -326,6 +309,7 @@ which
 aspell
 b43-fwcutter
 bash-completion
+dmidecode
 flatpak
 libappindicator
 libwnck3
@@ -333,6 +317,5 @@ mtools
 perl
 rofi
 sunshine
-welcome
 yadm
 yay
