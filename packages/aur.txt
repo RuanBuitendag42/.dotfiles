@@ -1,0 +1,44 @@
+# AUR Packages
+# Install with: yay -S --needed --noconfirm $(grep -v '^#' packages/aur.txt | grep -v '^$')
+
+# Theming
+catppuccin-cursors-macchiato
+catppuccin-gtk-theme-macchiato
+
+# Fonts
+maplemono-nf-unhinted
+ttf-ms-win11-auto
+
+# Browsers
+zen-browser-bin
+
+# Communication
+betterbird-bin
+vencord
+zapzap
+
+# Development
+visual-studio-code-bin
+github-copilot-cli
+devify
+
+# Hyprland Extras
+pyprland
+swaylock-effects
+waybar-updates
+wayland-idle-inhibitor-git
+
+# Gaming
+curseforge-bin
+
+# 3D Printing
+creality-print-bin
+orca-slicer-bin
+
+# Other
+gnome-disk-utility-3.4.1
+maliit-keyboard
+onlyoffice-bin
+qimgv-light
+vi
+vicinae-bin
