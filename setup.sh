@@ -200,8 +200,8 @@ ok "Repo state verified"
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 step "8/9 - Create Directories & Fix XDG"
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-mkdir -p "$HOME"/{desktop,documents,downloads,music,pictures,videos,Developer}
-mkdir -p "$HOME/pictures"/{screenshots,wallpapers}
+mkdir -p "$HOME"/{desktop,documents,downloads,music,Pictures,videos,Developer}
+mkdir -p "$HOME/Pictures"/{screenshots,Wallpapers}
 ok "XDG directories created"
 
 cat > "$HOME/.config/user-dirs.dirs" << 'EOF'
@@ -243,6 +243,31 @@ sudo systemctl enable --now docker 2>/dev/null || true
 sudo usermod -aG docker "$USER" 2>/dev/null || true
 ok "System services enabled"
 
+# Set SDDM theme to Catppuccin Macchiato Mauve
+if [ -d "/usr/share/sddm/themes/catppuccin-macchiato-mauve" ]; then
+    sudo mkdir -p /etc/sddm.conf.d
+    echo -e '[Theme]\nCurrent=catppuccin-macchiato-mauve' | sudo tee /etc/sddm.conf.d/99-catppuccin.conf > /dev/null
+    ok "SDDM theme set to Catppuccin Macchiato Mauve"
+fi
+
+# Download wallpapers if directory is empty
+if [ -z "$(ls -A \"$HOME/Pictures/Wallpapers/\" 2>/dev/null)" ]; then
+    echo "  Downloading cyberpunk wallpapers..."
+    cd "$HOME/Pictures/Wallpapers"
+    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/catpuccin_samurai.png 2>/dev/null || true
+    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/manga-samurai.png 2>/dev/null || true
+    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/cyberpunk_car.png 2>/dev/null || true
+    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/japan-purple-blur.png 2>/dev/null || true
+    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/catpuccin_landscape.png 2>/dev/null || true
+    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/japan_torii.png 2>/dev/null || true
+    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/neocity.png 2>/dev/null || true
+    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/rad_samurai.jpg 2>/dev/null || true
+    cd "$DOTFILES_DIR"
+    ok "Wallpapers downloaded"
+else
+    ok "Wallpapers already present"
+fi
+
 # Neovim plugins
 echo "  Installing Neovim plugins..."
 nvim --headless "+Lazy! sync" +qa 2>/dev/null || true
@@ -275,7 +300,8 @@ if [ "$INSTALL_HYPRLAND" = true ] && [ "$MINIMAL" = false ]; then
     echo "    Bar:        Waybar (Macchiato)"
     echo "    Launcher:   Wofi"
     echo "    Notifs:     Dunst"
-    echo "    Wallpaper:  swww"
+    echo "    Wallpaper:  swww (19 cyberpunk wallpapers)"
+    echo "    Login:      SDDM (Catppuccin Macchiato Mauve)"
     echo "    Screenshots: grim + slurp + satty"
 fi
 echo ""
@@ -292,6 +318,7 @@ echo "    SUPER+V          Toggle floating"
 echo "    SUPER+F          Fullscreen"
 echo "    SUPER+1-0        Switch workspace"
 echo "    SUPER+Y          Clipboard history"
+echo "    SUPER+W          Cycle wallpaper"
 echo "    SUPER+ESCAPE     Lock screen"
 echo "    SUPER+M          Power menu"
 echo "    PRINT            Screenshot (area)"
@@ -300,7 +327,7 @@ echo ""
 echo -e "  ${BOLD}Next steps:${NC}"
 echo "    1. Log out and log back in (for ZSH + docker group)"
 echo "    2. Select Hyprland from SDDM login manager"
-echo "    3. Add wallpapers to ~/pictures/wallpapers/"
+echo "    3. Wallpapers auto-set on login (SUPER+W to cycle)"
 echo "    4. In tmux, press prefix+I to install plugins"
 echo ""
 echo -e "  ${BOLD}Maintaining package lists:${NC}"

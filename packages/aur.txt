@@ -4,6 +4,7 @@
 # Theming
 catppuccin-cursors-macchiato
 catppuccin-gtk-theme-macchiato
+catppuccin-sddm-theme-macchiato
 
 # Fonts
 maplemono-nf-unhinted
