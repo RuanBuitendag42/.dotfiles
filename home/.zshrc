@@ -98,36 +98,39 @@ alias awsLogout="aws sso logout --sso-session RuanBuitendag42";
 alias chtsheet="curl cht.sh/";
 
 # Shell integrations
-eval "$(fzf --zsh)"
-eval "$(zoxide init --cmd cd zsh)"
+command -v fzf &>/dev/null && eval "$(fzf --zsh)"
+command -v zoxide &>/dev/null && eval "$(zoxide init --cmd cd zsh)"
 
-# Arduino cli
-arduino-cli completion zsh > ~/.arduino-cli-completion.zsh
-source ~/.arduino-cli-completion.zsh
+# Arduino CLI (optional)
+if command -v arduino-cli &>/dev/null; then
+  arduino-cli completion zsh > ~/.arduino-cli-completion.zsh
+  source ~/.arduino-cli-completion.zsh
+fi
 
-# PYENV
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - zsh)"
+# Pyenv (optional)
+if [[ -d "$HOME/.pyenv" ]]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init - zsh)"
+fi
 
-# NVM
-source /usr/share/nvm/init-nvm.sh
-[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
-source /usr/share/nvm/nvm.sh
-source /usr/share/nvm/bash_completion
-# source /usr/share/nvm/install-nvm-exec
+# NVM (optional)
+if [[ -f /usr/share/nvm/init-nvm.sh ]]; then
+  source /usr/share/nvm/init-nvm.sh
+elif [[ -d "$HOME/.nvm" ]]; then
+  export NVM_DIR="$HOME/.nvm"
+  [[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+  [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
+fi
 
+# Angular CLI (optional)
+command -v ng &>/dev/null && source <(ng completion script 2>/dev/null)
 
-
-# Load Angular CLI autocompletion.
-source <(ng completion script)
-
-# IONIC Completion
-if type compdef &>/dev/null; then
+# Ionic CLI (optional)
+if command -v ionic &>/dev/null && type compdef &>/dev/null; then
   __ionic() {
     compadd -- $(ionic completion -- "${words[@]}" 2>/dev/null)
   }
-
   compdef __ionic ionic
 fi
 
