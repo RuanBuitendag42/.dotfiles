@@ -6,11 +6,22 @@
     "margin-top": 6,
     "margin-left": 12,
     "margin-right": 12,
-    
-    "modules-left": ["hyprland/workspaces", "hyprland/window"],
-    "modules-center": ["clock"],
-    "modules-right": ["pulseaudio", "network", "cpu", "memory", "temperature", "battery", "tray", "custom/power"],
-    
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "network",
+        "cpu",
+        "memory",
+        "battery",
+        "tray",
+        "custom/power"
+    ],
     "hyprland/workspaces": {
         "format": "{icon}",
         "format-icons": {
@@ -31,7 +42,6 @@
         "all-outputs": true,
         "sort-by-number": true
     },
-    
     "hyprland/window": {
         "format": "{}",
         "max-length": 60,
@@ -39,11 +49,10 @@
         "rewrite": {
             "(.*) — Mozilla Firefox": "󰈹 $1",
             "(.*) - Zen Browser": "󰈹 $1",
-            "(.*) - VSCodium": "󰨞 $1",
-            "(.*) - Code": "󰨞 $1"
+            "(.*) - Code": "󰨞 $1",
+            "(.*) - Visual Studio Code": "󰨞 $1"
         }
     },
-    
     "clock": {
         "format": "{:%H:%M  %a %d %b}",
         "format-alt": "{:%Y-%m-%d  %H:%M:%S}",
@@ -54,11 +63,11 @@
             "weeks-pos": "right",
             "on-scroll": 1,
             "format": {
-                "months": "<span color='#c6a0f6'><b>{}</b></span>",
-                "days": "<span color='#cad3f5'><b>{}</b></span>",
-                "weeks": "<span color='#8aadf4'><b>W{}</b></span>",
-                "weekdays": "<span color='#eed49f'><b>{}</b></span>",
-                "today": "<span color='#ed8796'><b><u>{}</u></b></span>"
+                "months": "<span color=\"#c6a0f6\"><b>{}</b></span>",
+                "days": "<span color=\"#cad3f5\"><b>{}</b></span>",
+                "weeks": "<span color=\"#8aadf4\"><b>W{}</b></span>",
+                "weekdays": "<span color=\"#eed49f\"><b>{}</b></span>",
+                "today": "<span color=\"#ed8796\"><b><u>{}</u></b></span>"
             }
         },
         "actions": {
@@ -67,30 +76,18 @@
             "on-scroll-down": "shift_down"
         }
     },
-    
     "cpu": {
         "interval": 10,
         "format": " {usage}%",
         "max-length": 10,
         "on-click": "kitty -e btop"
     },
-    
     "memory": {
         "interval": 30,
         "format": " {}%",
         "max-length": 10,
         "on-click": "kitty -e btop"
     },
-    
-    "temperature": {
-        "thermal-zone": 2,
-        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
-        "critical-threshold": 80,
-        "format-critical": "{icon} {temperatureC}°C",
-        "format": "{icon} {temperatureC}°C",
-        "format-icons": ["", "", ""]
-    },
-    
     "battery": {
         "states": {
             "warning": 30,
@@ -100,9 +97,14 @@
         "format-charging": " {capacity}%",
         "format-plugged": " {capacity}%",
         "format-alt": "{icon} {time}",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
     },
-    
     "network": {
         "format-wifi": " {essid}",
         "format-ethernet": " {ipaddr}",
@@ -114,7 +116,6 @@
         "max-length": 50,
         "on-click": "nm-connection-editor"
     },
-    
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "format-muted": " Muted",
@@ -125,19 +126,21 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", ""]
+            "default": [
+                "",
+                "",
+                ""
+            ]
         },
         "on-click": "pavucontrol"
     },
-    
     "tray": {
         "icon-size": 20,
         "spacing": 8
     },
-    
     "custom/power": {
         "format": "⏻",
         "tooltip": false,
-        "on-click": "wlogout"
+        "on-click": "~/.local/bin/powermenu.sh"
     }
 }
