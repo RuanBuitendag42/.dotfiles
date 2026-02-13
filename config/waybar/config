@@ -75,8 +75,8 @@
         }
     },
     "clock": {
-        "format": "  {:%H:%M}  <small>%a</small>  {:%d·%m}",
-        "format-alt": "  {:%Y年%m月%d日}  {:%H:%M:%S}",
+        "format": "  {:%H:%M  <small>%a</small>  %d·%m}",
+        "format-alt": "  {:%Y年%m月%d日  %H:%M:%S}",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode": "year",
