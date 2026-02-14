@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════ */
-/*  侍  WAYBAR  ·  サイバーパンク武士  ·  CYBERPUNK SAMURAI       */
+/*  侍  WAYBAR  ·  未来武士  ·  FUTURISTIC SAMURAI               */
 /*  Catppuccin Macchiato  ·  ネオン浪人                            */
 /* ═══════════════════════════════════════════════════════════════ */
 
@@ -160,7 +160,7 @@ tooltip label {
     box-shadow: 0 0 8px rgba(198, 160, 246, 0.08);
 }
 
-/* ─── System Modules (shared cyberpunk pill style) ──────────── */
+/* ─── System Modules (shared samurai pill style) ──────────── */
 #cpu,
 #memory,
 #temperature,

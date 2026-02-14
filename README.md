@@ -172,7 +172,7 @@ See [HYPRLAND.md](HYPRLAND.md) for key bindings and configuration details.
 These dotfiles target **pure Arch Linux**. The package lists in `packages/` contain only
 standard Arch and AUR packages — no distro-specific dependencies.
 
-- ✅ Works on pure Arch, EndeavourOS, or any Arch-based distro
+- ✅ Works on pure Arch or any Arch-based distro
 - ✅ `setup.sh` handles full system setup from scratch
 - ✅ `make packages-save` / `make packages-diff` for package tracking
 
@@ -372,7 +372,7 @@ MIT - Use however you like!
 - **Catppuccin** - Color scheme
 - **Starship** - Shell prompt
 - **Kitty** - Terminal emulator
-- EndeavourOS community
+- Arch Linux community
 
 ---
 

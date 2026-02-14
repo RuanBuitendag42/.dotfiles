@@ -10,10 +10,10 @@ This is a personal dotfiles repository for Arch Linux. It contains:
 - Application configs (Neovim, Kitty, Tmux, etc.)
 - Hyprland DE (fully configured with Catppuccin Macchiato)
 - Package lists for full system reproducibility
-- Automation scripts (power menu, wallpaper, resolution)
+- Automation scripts (power menu, wallpaper, resolution, wallpaper fetcher)
 
 **Owner**: Ruan Buitendag (@RuanBuitendag42)  
-**System**: Arch Linux (currently EndeavourOS, targeting pure Arch)  
+**System**: Arch Linux (pure Arch)  
 **Deployment**: GNU Stow for symlink management  
 **Shell**: ZSH (default) with zinit + Starship prompt
 
@@ -54,13 +54,14 @@ This is a personal dotfiles repository for Arch Linux. It contains:
 ### 1. Structure Simplification (December 2025)
 - **Previous**: Confusing `arch/` and `generic/` split
 - **Current**: Clear separation by purpose (`config/`, `home/`, `scripts/`)
-- **Rationale**: EndeavourOS IS Arch, no need for distro separation
+- **Rationale**: Pure Arch Linux, single clear structure
 
 ### 2. Hyprland Approach
 - **Previous**: Incomplete HyDe configs
 - **Current**: Fully configured Hyprland DE with Catppuccin Macchiato
+- **Aesthetic**: Futuristic Samurai (未来侍) — Japanese ukiyo-e meets futuristic warrior, NOT cyberpunk
 - **Includes**: hyprland.conf, hypridle.conf, hyprlock.conf, waybar, wofi, dunst, swaylock
-- **Scripts**: powermenu.sh, wallpaper.sh, resolution.sh
+- **Scripts**: powermenu.sh, wallpaper.sh, resolution.sh, fetch-wallpapers.sh
 - **Window rules**: Using Hyprland 0.53+ `windowrule` syntax with `match:class`
 
 ### 3. Terminal Choice
@@ -145,12 +146,14 @@ This is the MOST important aspect - Macchiato theme must be used in ALL configur
 ### User Preferences
 
 1. **Theme**: **CATPPUCCIN MACCHIATO EVERYWHERE!** This is CRITICAL - all configs must use Macchiato
-2. **Hyprland**: Fully configured and deployed as active DE
-3. **Terminal**: Kitty (23x faster than Ghostty - benchmarked!)
-4. **Shell**: ZSH with Starship prompt (not fish, not bash)
-5. **Editor**: Neovim with LazyVim, uses Copilot
-6. **Automation**: Loves Makefiles for easy commands
-7. **System reproduction**: Package lists in `packages/` for carbon copy installs
+2. **Aesthetic**: Futuristic Samurai (未来侍) — Japanese warrior meets futuristic elegance, NOT cyberpunk
+3. **Hyprland**: Fully configured and deployed as active DE
+4. **Terminal**: Kitty (23x faster than Ghostty - benchmarked!)
+5. **Shell**: ZSH with Starship prompt (not fish, not bash)
+6. **Editor**: Neovim with LazyVim, uses Copilot
+7. **Automation**: Loves Makefiles for easy commands
+8. **System reproduction**: Package lists in `packages/` for carbon copy installs
+9. **Wallpapers**: Catppuccin Macchiato palette, Japanese samurai / sakura / torii / ukiyo-e style
 
 ### Pain Points Solved
 
@@ -162,7 +165,7 @@ This is the MOST important aspect - Macchiato theme must be used in ALL configur
 6. ✅ Outdated network scripts removed
 7. ✅ Theme preferences documented (Macchiato EVERYWHERE!)
 8. ✅ Fish shell removed, ZSH set as default
-9. ✅ EndeavourOS-specific packages removed from lists
+9. ✅ EndeavourOS fully removed — pure Arch Linux
 10. ✅ Full system reproducibility via packages/ + setup.sh
 
 ## Development Guidelines
@@ -173,7 +176,7 @@ This is the MOST important aspect - Macchiato theme must be used in ALL configur
 2. **Test with stow dry-run** before deploying: `stow -n -v -t ~/.config .`
 3. **Backup before changes**: `make backup`
 4. **Update docs** if changing structure
-5. **Keep scripts portable** - Arch/EndeavourOS compatible
+5. **Keep scripts portable** - Pure Arch Linux compatible
 
 ### Shell Script Style
 
@@ -311,8 +314,8 @@ Potential additions:
 - User wants aggressive iteration, not stopping for approval
 - Prefer implementing over suggesting
 - Use Makefile commands in examples
-- Remember: EndeavourOS = Arch, no special handling needed
-- Package lists in packages/ should NOT include EndeavourOS-specific packages
+- System is pure Arch Linux, no distro-specific packages
+- Package lists in packages/ contain only standard Arch + AUR packages
 - Hyprland IS the current active DE, fully configured
 - Kitty is primary terminal, Ghostty is optional curiosity
 - All automation should be idempotent and safe to re-run

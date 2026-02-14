@@ -7,7 +7,7 @@ linux-lts
 linux-lts-headers
 linux-firmware
 amd-ucode
-dracut
+mkinitcpio
 efibootmgr
 efitools
 grub

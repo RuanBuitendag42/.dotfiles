@@ -1,7 +1,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 # ═══════════════════════════════════════════════════════════════
-#  侍  STARSHIP  ·  サイバーパンク  ·  CYBERPUNK SAMURAI PROMPT
+#  侍  STARSHIP  ·  未来侍  ·  FUTURISTIC SAMURAI PROMPT
 #  Catppuccin Macchiato  ·  ネオン浪人
 # ═══════════════════════════════════════════════════════════════
 
@@ -216,7 +216,6 @@ CentOS = " "
 Debian = " "
 DragonFly = " "
 Emscripten = " "
-EndeavourOS = " "
 Fedora = " "
 FreeBSD = " "
 Garuda = "󰛓 "

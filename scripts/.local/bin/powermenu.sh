@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ═══════════════════════════════════════════════════════════════
-#  侍  POWER MENU  ·  電源メニュー  ·  CYBERPUNK SAMURAI
-#  Catppuccin Macchiato  ·  ネオン浪人
+#  侍  POWER MENU  ·  電源メニュー  ·  FUTURISTIC SAMURAI
+#  Catppuccin Macchiato  ·  未来侍
 # ═══════════════════════════════════════════════════════════════
 # Used by Hyprland keybind SUPER+M
 

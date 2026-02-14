@@ -1,4 +1,4 @@
-# Cyberpunk Samurai Tab Bar for Kitty
+# Futuristic Samurai Tab Bar for Kitty
 # 侍 サイバーパンク端末
 
 from kitty.boss import get_boss

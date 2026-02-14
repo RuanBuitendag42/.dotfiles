@@ -1,5 +1,5 @@
 # ═══════════════════════════════════════════════════════════════
-#  侍  SWAYLOCK  ·  サイバーパンク錠前  ·  CYBERPUNK LOCKSCREEN
+#  侍  SWAYLOCK  ·  未来錠前  ·  FUTURISTIC LOCKSCREEN
 #  Catppuccin Macchiato  ·  ネオン浪人
 # ═══════════════════════════════════════════════════════════════
 
@@ -15,7 +15,7 @@ effect-blur=10x7
 effect-vignette=0.6:0.6
 fade-in=0.3
 
-# Colors - Catppuccin Macchiato Cyberpunk
+# Colors - Catppuccin Macchiato
 color=181926
 
 # Ring colors ─ neon mauve glow
@@ -46,7 +46,7 @@ ring-clear-color=eed49f
 ring-ver-color=c6a0f6
 ring-wrong-color=ed8796
 
-# Font ─ cyberpunk
+# Font ─ samurai
 font=JetBrainsMono Nerd Font
 font-size=24
 

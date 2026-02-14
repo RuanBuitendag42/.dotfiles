@@ -69,6 +69,9 @@ bindkey '^j' down-line-or-search
 eval "$(starship init zsh)"
 export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
+# Add local bin to PATH (scripts deployed via stow)
+export PATH="$HOME/.local/bin:$PATH"
+
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx

@@ -252,18 +252,19 @@ fi
 
 # Download wallpapers if directory is empty
 if [ -z "$(ls -A \"$HOME/Pictures/Wallpapers/\" 2>/dev/null)" ]; then
-    echo "  Downloading cyberpunk wallpapers..."
+    echo "  Downloading samurai wallpapers..."
     cd "$HOME/Pictures/Wallpapers"
     curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/catpuccin_samurai.png 2>/dev/null || true
     curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/manga-samurai.png 2>/dev/null || true
-    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/cyberpunk_car.png 2>/dev/null || true
     curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/japan-purple-blur.png 2>/dev/null || true
     curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/catpuccin_landscape.png 2>/dev/null || true
     curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/japan_torii.png 2>/dev/null || true
     curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/neocity.png 2>/dev/null || true
     curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/rad_samurai.jpg 2>/dev/null || true
     cd "$DOTFILES_DIR"
-    ok "Wallpapers downloaded"
+    # Also fetch catppuccin community wallpapers
+    bash "$DOTFILES_DIR/scripts/.local/bin/fetch-wallpapers.sh" 2>/dev/null || true
+    ok "Wallpapers downloaded (run fetch-wallpapers.sh for more)"
 else
     ok "Wallpapers already present"
 fi
@@ -300,7 +301,7 @@ if [ "$INSTALL_HYPRLAND" = true ] && [ "$MINIMAL" = false ]; then
     echo "    Bar:        Waybar (Macchiato)"
     echo "    Launcher:   Wofi"
     echo "    Notifs:     Dunst"
-    echo "    Wallpaper:  swww (19 cyberpunk wallpapers)"
+    echo "    Wallpaper:  swww + fetch-wallpapers.sh"
     echo "    Login:      SDDM (Catppuccin Macchiato Mauve)"
     echo "    Screenshots: grim + slurp + satty"
 fi
