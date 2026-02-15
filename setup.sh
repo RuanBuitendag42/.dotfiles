@@ -277,6 +277,12 @@ sudo systemctl enable --now bluetooth 2>/dev/null || true
 sudo systemctl enable --now sddm 2>/dev/null || true
 sudo systemctl enable --now docker 2>/dev/null || true
 sudo usermod -aG docker "$USER" 2>/dev/null || true
+
+# Enable user services (pipewire audio)
+systemctl --user enable --now pipewire.socket 2>/dev/null || true
+systemctl --user enable --now pipewire-pulse.socket 2>/dev/null || true
+systemctl --user enable --now pipewire-pulse.service 2>/dev/null || true
+systemctl --user enable --now wireplumber.service 2>/dev/null || true
 ok "System services enabled"
 
 # Set SDDM theme to Catppuccin Macchiato Mauve
