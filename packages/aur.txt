@@ -20,6 +20,7 @@ zapzap
 
 # Development
 visual-studio-code-bin
+github-copilot-cli
 
 # Hyprland Extras
 pyprland
@@ -35,6 +36,7 @@ creality-print-bin
 orca-slicer-bin
 
 # Other
+gnome-disk-utility-3.4.1
 maliit-keyboard
 onlyoffice-bin
 qimgv-light

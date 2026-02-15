@@ -15,7 +15,7 @@
 		}
 	},
 	"display": {
-		"separator": "  ",
+		"separator": "   ",
 		"color": {
 			"keys": "35",
 			"output": "white"
@@ -24,96 +24,96 @@
 	"modules": [
 		{
 			"type": "custom",
-			"format": "\u001b[38;2;198;160;246m╭──── 侍 \u001b[1m未来侍 · System\u001b[0m\u001b[38;2;198;160;246m ────────────────────────╮\u001b[0m"
+			"format": "\u001b[38;2;198;160;246m╭──── 侍 \u001b[1m未来侍 · System\u001b[0m\u001b[38;2;198;160;246m ────────────────────────────╮\u001b[0m"
 		},
 		{
 			"type": "title",
-			"key": "  ",
+			"key": "      ",
 			"keyColor": "magenta",
 			"format": "{user-name}@{host-name}"
 		},
 		{
 			"type": "separator",
-			"string": "─────────────────────────────────────"
+			"string": "──────────────────────────────────────────"
 		},
 		{
 			"type": "os",
-			"key": "  󰣇 ",
+			"key": "  󰣇  ",
 			"keyColor": "blue"
 		},
 		{
 			"type": "kernel",
-			"key": "   ",
+			"key": "  󰌽  ",
 			"keyColor": "red"
 		},
 		{
 			"type": "packages",
-			"key": "  󰏗 ",
+			"key": "  󰏗  ",
 			"keyColor": "green"
 		},
 		{
 			"type": "shell",
-			"key": "   ",
+			"key": "  󰆍  ",
 			"keyColor": "yellow"
 		},
 		{
 			"type": "wm",
-			"key": "   ",
+			"key": "  󰖲  ",
 			"keyColor": "cyan"
 		},
 		{
 			"type": "terminal",
-			"key": "   ",
+			"key": "  󰄛  ",
 			"keyColor": "magenta"
 		},
 		{
 			"type": "uptime",
-			"key": "  󱫐 ",
+			"key": "  󱫐  ",
 			"keyColor": "green"
 		},
 		"break",
 		{
 			"type": "custom",
-			"format": "\u001b[38;2;198;160;246m├──── 刀 \u001b[1mHardware\u001b[0m\u001b[38;2;198;160;246m ──────────────────────────────╯\u001b[0m"
+			"format": "\u001b[38;2;198;160;246m├──── 刀 \u001b[1mHardware\u001b[0m\u001b[38;2;198;160;246m ───────────────────────────────╯\u001b[0m"
 		},
 		{
 			"type": "cpu",
-			"key": "   ",
+			"key": "  󰍛  ",
 			"keyColor": "cyan"
 		},
 		{
 			"type": "gpu",
-			"key": "  󰛇 ",
+			"key": "  󰛇  ",
 			"keyColor": "red",
 			"format": "{2} {3}"
 		},
 		{
 			"type": "memory",
-			"key": "   ",
+			"key": "  󰑭  ",
 			"keyColor": "yellow"
 		},
 		{
 			"type": "disk",
-			"key": "  󰋊 ",
+			"key": "  󰋊  ",
 			"keyColor": "green",
 			"folders": "/"
 		},
 		{
 			"type": "display",
-			"key": "  󰍹 ",
+			"key": "  󰍹  ",
 			"keyColor": "blue",
 			"compactType": "original"
 		},
 		"break",
 		{
 			"type": "custom",
-			"format": "\u001b[38;2;198;160;246m╰────────────────── 武士道 ──────────────────────╯\u001b[0m"
+			"format": "\u001b[38;2;198;160;246m╰──────────────────── 武士道 ──────────────────────╯\u001b[0m"
 		},
 		"break",
 		{
 			"type": "colors",
 			"symbol": "circle",
-			"paddingLeft": 6
+			"paddingLeft": 8
 		}
 	]
 }
