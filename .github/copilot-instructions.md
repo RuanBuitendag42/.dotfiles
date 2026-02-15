@@ -22,12 +22,14 @@ This is a personal dotfiles repository for Arch Linux. It contains:
 ```
 .dotfiles/
 ├── config/              # XDG_CONFIG_HOME apps (~/.config/)
-│   ├── btop/           # System monitor
+│   ├── btop/           # System monitor (Catppuccin Macchiato)
 │   ├── dunst/          # Notification daemon
+│   ├── fastfetch/      # System info display
 │   ├── hypr/           # Hyprland + Hypridle + Hyprlock
-│   ├── kitty/          # Terminal (primary)
-│   ├── nvim/           # LazyVim-based setup
+│   ├── kitty/          # Terminal (primary, Catppuccin Macchiato)
+│   ├── nvim/           # LazyVim + Catppuccin Macchiato
 │   ├── nushell/        # Alternative shell
+│   ├── sddm/           # Display manager theme
 │   ├── starship/       # Shell prompt
 │   ├── swaylock/       # Lock screen
 │   ├── tmux/           # Terminal multiplexer
@@ -46,7 +48,8 @@ This is a personal dotfiles repository for Arch Linux. It contains:
 ├── HYPRLAND.md         # Hyprland configuration docs
 ├── PROJECT_SETUP.md    # Detailed setup guide
 ├── THEMES.md           # Catppuccin Macchiato reference
-└── TERMINAL_COMPARISON.md  # Kitty vs Ghostty analysis
+├── TERMINAL_COMPARISON.md  # Kitty vs Ghostty analysis
+└── NEOVIM.md           # Neovim/LazyVim learning roadmap
 ```
 
 ## Key Design Decisions
@@ -256,8 +259,10 @@ make install-scripts
 ### Neovim
 - Config: `config/nvim/`
 - Based on: LazyVim
+- Theme: Catppuccin Macchiato (via `lua/plugins/colorscheme.lua`)
 - Plugins: Auto-managed by Lazy.nvim
-- Custom: `lua/` directory for overrides
+- Custom: `lua/plugins/` for plugin specs, `lua/config/` for options/keymaps
+- Roadmap: See `NEOVIM.md` for learning path and next steps
 
 ### Tmux
 - Config: `config/tmux/tmux.conf`
@@ -271,8 +276,8 @@ make install-scripts
 
 ### Kitty
 - Config: `config/kitty/kitty.conf`
-- Themes: `config/kitty/kitty-themes/` (200+ themes)
-- Current: Uses theme from kitty-themes
+- Theme: `config/kitty/themes/catppuccin-macchiato.conf`
+- Included via: `include themes/catppuccin-macchiato.conf` in kitty.conf
 
 ## Version Control
 
@@ -375,6 +380,7 @@ When working on this repository:
 - HYPRLAND.md (Hyprland config docs)
 - THEMES.md (Catppuccin Macchiato reference)
 - TERMINAL_COMPARISON.md (Kitty vs Ghostty)
+- NEOVIM.md (Neovim/LazyVim learning roadmap)
 - .github/copilot-instructions.md (this file)
 
 **Files to remove:**

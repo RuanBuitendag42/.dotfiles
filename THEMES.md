@@ -72,10 +72,7 @@ Text Colors:
 
 ```bash
 # Catppuccin Macchiato theme
-include ./kitty-themes/themes/Monokai_Pro_(Filter_Macchiato).conf
-
-# Or use built-in Catppuccin
-# Download from: https://github.com/catppuccin/kitty
+include themes/catppuccin-macchiato.conf
 ```
 
 **Colors**:
@@ -129,19 +126,29 @@ return {
       term_colors = true,
       integrations = {
         cmp = true,
+        dashboard = true,
+        flash = true,
         gitsigns = true,
-        nvimtree = true,
-        telescope = true,
-        treesitter = true,
-        notify = true,
+        indent_blankline = { enabled = true },
+        lsp_trouble = true,
+        mason = true,
         mini = true,
+        native_lsp = { enabled = true },
+        navic = { enabled = true, custom_bg = "lualine" },
+        noice = true,
+        notify = true,
+        nvimtree = true,
+        semantic_tokens = true,
+        telescope = { enabled = true },
+        treesitter = true,
+        which_key = true,
       },
     },
   },
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin-macchiato",
+      colorscheme = "catppuccin",
     },
   },
 }
