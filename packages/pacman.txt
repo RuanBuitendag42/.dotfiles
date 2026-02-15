@@ -1,142 +1,8 @@
 # Core System
-base
-base-devel
-linux
-linux-headers
-linux-lts
-linux-lts-headers
-linux-firmware
-amd-ucode
-mkinitcpio
-efibootmgr
-efitools
-grub
-os-prober
-btrfs-progs
-dosfstools
-e2fsprogs
-exfatprogs
-f2fs-tools
-jfsutils
-nilfs-utils
-xfsprogs
-ntfs-3g
-lvm2
-cryptsetup
-dmraid
-device-mapper
-mdadm
-
-
-# Networking
-networkmanager
-network-manager-applet
-networkmanager-openconnect
-networkmanager-openvpn
-iwd
-firewalld
-iptables-nft
-openssh
-sshpass
-modemmanager
-xl2tpd
-nfs-utils
-bind
-dnsmasq
-ethtool
-usb_modeswitch
-wpa_supplicant
-inetutils
-netctl
-nss-mdns
-ntp
-
-# Audio/Video (PipeWire)
-pipewire-alsa
-pipewire-jack
-pipewire-pulse
-wireplumber
-alsa-firmware
-alsa-plugins
-alsa-utils
-gst-libav
-gst-plugin-pipewire
-gst-plugins-bad
-gst-plugins-ugly
-sof-firmware
-
-# Bluetooth
-bluedevil
-bluez
-bluez-utils
-blueman
-
-# Printing
-cups
-cups-browsed
-cups-filters
-cups-pdf
-foomatic-db
-foomatic-db-engine
-foomatic-db-gutenprint-ppds
-foomatic-db-nonfree
-foomatic-db-nonfree-ppds
-foomatic-db-ppds
-gutenprint
-hplip
-ghostscript
-gsfonts
-print-manager
-splix
-system-config-printer
-
-# KDE/Plasma (SDDM login manager needs these)
-plasma-desktop
-plasma-workspace
-plasma-x11-session
-plasma-nm
-plasma-pa
-plasma-firewall
-plasma-disks
-plasma-systemmonitor
-plasma-browser-integration
-kdeplasma-addons
-sddm-kcm
-powerdevil
-power-profiles-daemon
-kscreen
-kgamma
-kwallet-pam
-kwayland-integration
-kde-gtk-config
-kde-cli-tools
-breeze-gtk
-
-# KDE Apps (optional - remove if you want to slim down)
-ark
-dolphin
-dolphin-plugins
-gwenview
-haruna
-kate
-kcalc
-kdeconnect
-kdegraphics-thumbnailers
-kdenetwork-filesharing
-kinfocenter
-kio-admin
-kio-extras
-kio-fuse
-konsole
-okular
-spectacle
-
 # Hyprland DE
 hyprland
 hypridle
 hyprlock
-swayidle
-swaync
 hyprpicker
 waybar
 wofi
@@ -161,7 +27,6 @@ kvantum-qt5
 
 # Terminal & Shell
 kitty
-ghostty
 zsh
 starship
 tmux
@@ -199,9 +64,6 @@ unzip
 meld
 diffutils
 reflector
-pkgfile
-downgrade
-pacman-contrib
 rebuild-detector
 yq
 zoxide
@@ -209,24 +71,14 @@ zoxide
 # Development
 arduino-cli
 neovim
-nvm
 pyenv
-python
-python-packaging
-python-pillow
-python-pyqt5
-python-pyqt6
-python-defusedxml
-python-reportlab
 docker
 docker-compose
 yarn
 
 # Browsers
-firefox
 
 # Gaming
-steam
 
 # Fonts
 ttf-jetbrains-mono-nerd
@@ -241,7 +93,7 @@ noto-fonts-cjk
 noto-fonts-emoji
 noto-fonts-extra
 cantarell-fonts
-woff2-font-awesome
+otf-font-awesome
 
 # File Managers
 nemo
@@ -249,9 +101,6 @@ thunar
 thunar-archive-plugin
 thunar-volman
 
-# Document Viewer
-zathura
-zathura-pdf-mupdf
 
 # Media/Graphics
 ffmpegthumbnailer
@@ -263,9 +112,6 @@ libopenraw
 kimageformats
 qt6-imageformats
 
-# Theming
-papirus-icon-theme
-
 # X11/Wayland
 xorg-server
 xorg-xinit
@@ -274,8 +120,6 @@ xorg-xrandr
 xorg-xdpyinfo
 xorg-xkill
 xf86-input-libinput
-xf86-video-amdgpu
-xf86-video-ati
 mesa-utils
 xdg-desktop-portal-kde
 xdg-user-dirs
@@ -293,7 +137,6 @@ hwdetect
 hwinfo
 inxi
 logrotate
-lsb-release
 lsscsi
 rtkit
 sane
@@ -311,15 +154,12 @@ which
 
 # Misc
 aspell
-b43-fwcutter
 bash-completion
 dmidecode
 flatpak
-libappindicator
+libappindicator-gtk3
 libwnck3
 mtools
 perl
 rofi
-sunshine
 yadm
-yay
