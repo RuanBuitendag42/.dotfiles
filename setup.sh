@@ -81,8 +81,18 @@ ok "System updated"
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 step "2/9 - Install yay (AUR helper)"
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# base-devel is required for makepkg (building AUR packages)
+if ! pacman -Qi base-devel &> /dev/null; then
+    echo "  Installing base-devel (required for building packages)..."
+    sudo pacman -S --needed --noconfirm base-devel git
+    ok "base-devel installed"
+else
+    ok "base-devel already installed"
+fi
+
 if ! command -v yay &> /dev/null; then
     cd /tmp
+    rm -rf yay  # Clean up any previous failed attempts
     git clone https://aur.archlinux.org/yay.git
     cd yay && makepkg -si --noconfirm
     cd "$DOTFILES_DIR"
@@ -106,8 +116,18 @@ else
     if [ -f "$DOTFILES_DIR/packages/pacman.txt" ]; then
         echo "  Installing from packages/pacman.txt..."
         PKGS=$(read_pkglist "$DOTFILES_DIR/packages/pacman.txt")
-        sudo pacman -S --needed --noconfirm $PKGS
-        ok "All pacman packages installed"
+        FAILED_PKGS=""
+        # Install packages in smaller batches to handle unavailable packages gracefully
+        for pkg in $PKGS; do
+            if ! sudo pacman -S --needed --noconfirm "$pkg" 2>/dev/null; then
+                warn "Package not available: $pkg (skipping)"
+                FAILED_PKGS="$FAILED_PKGS $pkg"
+            fi
+        done
+        if [ -n "$FAILED_PKGS" ]; then
+            warn "Some packages were skipped:$FAILED_PKGS"
+        fi
+        ok "Pacman packages installed"
     else
         err "packages/pacman.txt not found!"
         exit 1
@@ -121,8 +141,17 @@ if [ "$INSTALL_AUR" = true ] && [ "$MINIMAL" = false ]; then
     if [ -f "$DOTFILES_DIR/packages/aur.txt" ]; then
         echo "  Installing from packages/aur.txt..."
         AURPKGS=$(read_pkglist "$DOTFILES_DIR/packages/aur.txt")
-        yay -S --needed --noconfirm $AURPKGS
-        ok "All AUR packages installed"
+        FAILED_AUR=""
+        for pkg in $AURPKGS; do
+            if ! yay -S --needed --noconfirm "$pkg" 2>/dev/null; then
+                warn "AUR package failed: $pkg (skipping)"
+                FAILED_AUR="$FAILED_AUR $pkg"
+            fi
+        done
+        if [ -n "$FAILED_AUR" ]; then
+            warn "Some AUR packages were skipped:$FAILED_AUR"
+        fi
+        ok "AUR packages installed"
     else
         warn "packages/aur.txt not found, skipping"
     fi
@@ -197,6 +226,13 @@ cd "$DOTFILES_DIR"
 git checkout -- config/ home/ scripts/ 2>/dev/null || true
 ok "Repo state verified"
 
+# Kitty Catppuccin theme: ensure themes directory exists via stow
+if [ ! -f "$HOME/.config/kitty/themes/catppuccin-macchiato.conf" ]; then
+    warn "Kitty Catppuccin theme not found — check config/kitty/themes/"
+else
+    ok "Kitty Catppuccin Macchiato theme present"
+fi
+
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 step "8/9 - Create Directories & Fix XDG"
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -253,17 +289,19 @@ fi
 # Download wallpapers if directory is empty
 if [ -z "$(ls -A \"$HOME/Pictures/Wallpapers/\" 2>/dev/null)" ]; then
     echo "  Downloading samurai wallpapers..."
-    cd "$HOME/Pictures/Wallpapers"
-    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/catpuccin_samurai.png 2>/dev/null || true
-    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/manga-samurai.png 2>/dev/null || true
-    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/japan-purple-blur.png 2>/dev/null || true
-    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/catpuccin_landscape.png 2>/dev/null || true
-    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/japan_torii.png 2>/dev/null || true
-    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/neocity.png 2>/dev/null || true
-    curl -fLO https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/rad_samurai.jpg 2>/dev/null || true
-    cd "$DOTFILES_DIR"
-    # Also fetch catppuccin community wallpapers
-    bash "$DOTFILES_DIR/scripts/.local/bin/fetch-wallpapers.sh" 2>/dev/null || true
+    echo "  Fetching wallpapers via fetch-wallpapers.sh..."
+    if [ -x "$HOME/.local/bin/fetch-wallpapers.sh" ]; then
+        bash "$HOME/.local/bin/fetch-wallpapers.sh" || true
+    elif [ -f "$DOTFILES_DIR/scripts/.local/bin/fetch-wallpapers.sh" ]; then
+        bash "$DOTFILES_DIR/scripts/.local/bin/fetch-wallpapers.sh" || true
+    else
+        # Fallback: download a few key wallpapers directly
+        cd "$HOME/Pictures/Wallpapers"
+        for img in catpuccin_samurai.png manga-samurai.png japan-purple-blur.png catpuccin_landscape.png japan_torii.png rad_samurai.jpg neosamurai.webp; do
+            curl -fLO "https://raw.githubusercontent.com/D3Ext/aesthetic-wallpapers/main/images/$img" 2>/dev/null || true
+        done
+        cd "$DOTFILES_DIR"
+    fi
     ok "Wallpapers downloaded (run fetch-wallpapers.sh for more)"
 else
     ok "Wallpapers already present"
