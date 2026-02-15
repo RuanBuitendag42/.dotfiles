@@ -1,5 +1,7 @@
 return {
-  -- Catppuccin Macchiato - THE theme for this setup
+  -- ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+  -- ┃  Catppuccin Macchiato - THE theme for this setup ┃
+  -- ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
   {
     "catppuccin/nvim",
     name = "catppuccin",
@@ -12,6 +14,19 @@ return {
       },
       transparent_background = false,
       term_colors = true,
+      dim_inactive = {
+        enabled = true, -- Dim unfocused windows — keeps focus sharp like a blade
+        shade = "dark",
+        percentage = 0.15,
+      },
+      styles = {
+        comments = { "italic" }, -- Elegant italic comments
+        conditionals = { "italic" },
+        keywords = { "bold" }, -- Bold keywords stand out
+        functions = {},
+        strings = {},
+        variables = {},
+      },
       integrations = {
         cmp = true,
         dashboard = true,
@@ -40,6 +55,30 @@ return {
         treesitter = true,
         which_key = true,
       },
+      custom_highlights = function(colors)
+        return {
+          -- Floating windows with subtle border glow
+          FloatBorder = { fg = colors.mauve, bg = colors.mantle },
+          NormalFloat = { bg = colors.mantle },
+
+          -- Telescope styling
+          TelescopeBorder = { fg = colors.mauve, bg = colors.mantle },
+          TelescopePromptBorder = { fg = colors.mauve, bg = colors.mantle },
+          TelescopePromptTitle = { fg = colors.crust, bg = colors.mauve, style = { "bold" } },
+          TelescopeResultsTitle = { fg = colors.crust, bg = colors.teal, style = { "bold" } },
+          TelescopePreviewTitle = { fg = colors.crust, bg = colors.green, style = { "bold" } },
+
+          -- Cursor line with subtle highlight
+          CursorLine = { bg = colors.surface0 },
+          CursorLineNr = { fg = colors.mauve, style = { "bold" } },
+
+          -- Color column as subtle guide
+          ColorColumn = { bg = colors.surface0 },
+
+          -- Which-key styling
+          WhichKeyBorder = { fg = colors.mauve, bg = colors.mantle },
+        }
+      end,
     },
   },
 
