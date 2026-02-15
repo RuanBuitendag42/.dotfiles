@@ -309,6 +309,42 @@ Potential additions:
 2. **CI/CD** - Automated testing of configs
 3. **Additional scripts** - More automation in `scripts/.local/bin/`
 
+## Commit Strategy
+
+**CRITICAL: Commit frequently to maintain recoverable state!**
+
+After a catastrophic drive failure in February 2026, the importance of frequent commits became painfully clear. Follow this strategy:
+
+### When to Commit
+- **After every meaningful change**: Don't batch unrelated changes
+- **Before risky operations**: Always commit working state before experimenting
+- **After fixing a bug**: Commit the fix immediately
+- **After adding/modifying configs**: Each app config change = one commit
+- **After package list changes**: Commit updated pacman.txt/aur.txt separately
+- **After script modifications**: Commit each script change independently
+- **End of session**: Always commit before closing
+
+### Commit Workflow
+```bash
+# Check what changed
+git status && git diff --stat
+
+# Stage and commit granularly
+git add packages/pacman.txt packages/aur.txt
+git commit -m "fix: clean up package lists for reliable fresh install"
+
+git add config/kitty/
+git commit -m "fix: add catppuccin macchiato theme for kitty"
+
+# Push immediately after commits
+git push
+```
+
+### Recovery Insurance
+- **Tag stable states**: After a successful full setup, tag it: `git tag -a stable-YYYYMMDD -m "Working state"`
+- **Push tags**: `git push --tags`
+- **Never leave uncommitted work**: If the drive dies, uncommitted = gone forever
+
 ## Notes for Copilot
 
 - User wants aggressive iteration, not stopping for approval
@@ -319,6 +355,7 @@ Potential additions:
 - Hyprland IS the current active DE, fully configured
 - Kitty is primary terminal, Ghostty is optional curiosity
 - All automation should be idempotent and safe to re-run
+- **COMMIT FREQUENTLY** - after every meaningful change, push to remote
 
 ## Repository Maintenance Rules
 
