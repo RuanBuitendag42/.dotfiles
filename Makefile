@@ -13,6 +13,7 @@ help:
 	@echo "  make install-configs  Deploy ~/.config/ application configs only"
 	@echo "  make install-scripts  Deploy ~/.local/bin/ scripts only"
 	@echo "  make install-home     Deploy home dotfiles (~/.zshrc, etc.)"
+	@echo "  make install-sddm    Deploy SDDM theme config (requires sudo)"
 	@echo ""
 	@echo "Maintenance:"
 	@echo "  make backup           Backup existing configs before deploying"
@@ -32,13 +33,13 @@ help:
 
 # ─── Deployment ─────────────────────────────────────────────────
 
-install: install-configs install-home install-scripts
+install: install-configs install-home install-scripts install-sddm
 	@echo "All configurations deployed!"
 
 install-configs:
 	@echo "Deploying application configs to ~/.config/..."
 	@mkdir -p ~/.config
-	@cd config && stow -R --adopt --no-folding -v -t ~/.config .
+	@cd config && stow -R --adopt --no-folding --ignore='sddm' -v -t ~/.config .
 	@git checkout -- config/
 	@echo "Configs deployed!"
 
@@ -55,6 +56,12 @@ install-scripts:
 	@git checkout -- scripts/
 	@chmod +x ~/.local/bin/*.sh 2>/dev/null || true
 	@echo "Scripts deployed!"
+
+install-sddm:
+	@echo "Deploying SDDM theme config (requires sudo)..."
+	@sudo mkdir -p /etc/sddm.conf.d
+	@sudo cp -v config/sddm/theme.conf /etc/sddm.conf.d/theme.conf
+	@echo "SDDM theme set to catppuccin-macchiato-mauve!"
 
 # ─── Maintenance ────────────────────────────────────────────────
 

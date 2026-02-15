@@ -20,10 +20,14 @@ udiskie
 brightnessctl
 playerctl
 pavucontrol
+pipewire
+pipewire-pulse
+wireplumber
 qt5ct
 qt6ct
 kvantum
 kvantum-qt5
+sddm
 
 # Terminal & Shell
 kitty

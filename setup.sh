@@ -282,7 +282,7 @@ ok "System services enabled"
 # Set SDDM theme to Catppuccin Macchiato Mauve
 if [ -d "/usr/share/sddm/themes/catppuccin-macchiato-mauve" ]; then
     sudo mkdir -p /etc/sddm.conf.d
-    echo -e '[Theme]\nCurrent=catppuccin-macchiato-mauve' | sudo tee /etc/sddm.conf.d/99-catppuccin.conf > /dev/null
+    sudo cp -v "$DOTFILES_DIR/config/sddm/theme.conf" /etc/sddm.conf.d/theme.conf
     ok "SDDM theme set to Catppuccin Macchiato Mauve"
 fi
 
