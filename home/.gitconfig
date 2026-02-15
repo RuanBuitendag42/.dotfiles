@@ -1,0 +1,49 @@
+[user]
+	name = ruanb
+	email = ruan@minm.co.za
+
+[init]
+	defaultBranch = main
+
+[core]
+	editor = nvim
+	pager = delta
+	autocrlf = input
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	navigate = true
+	side-by-side = true
+	line-numbers = true
+	syntax-theme = Catppuccin Macchiato
+
+[merge]
+	conflictstyle = diff3
+
+[diff]
+	colorMoved = default
+
+[push]
+	autoSetupRemote = true
+	default = current
+
+[pull]
+	rebase = true
+
+[credential]
+	helper = store
+
+[alias]
+	s = status -sb
+	l = log --oneline --graph --decorate -20
+	la = log --oneline --graph --decorate --all -30
+	d = diff
+	ds = diff --staged
+	co = checkout
+	br = branch
+	cm = commit -m
+	amend = commit --amend --no-edit
+	undo = reset --soft HEAD~1
+	wip = !git add -A && git commit -m 'wip: checkpoint'
