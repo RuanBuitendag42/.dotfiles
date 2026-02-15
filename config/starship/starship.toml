@@ -1,27 +1,32 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-# ═══════════════════════════════════════════════════════════════
-#  侍  STARSHIP  ·  未来侍  ·  FUTURISTIC SAMURAI PROMPT
-#  Catppuccin Macchiato  ·  ネオン浪人
-# ═══════════════════════════════════════════════════════════════
+# ---------------------------------------------------------------
+#  STARSHIP - Futuristic Samurai Prompt
+#  Catppuccin Macchiato
+# ---------------------------------------------------------------
 
+palette = "catppuccin_macchiato"
 add_newline = true
 
 format = """
-[╭─](bold mauve)\
+[┌ 侍 ](bold mauve)\
+$os\
 $username\
 $hostname\
-$kubernetes\
 $directory\
 $git_branch\
-${custom.giturl}\
 $git_commit\
 $git_state\
 $git_status\
-$all
-[╰─](bold mauve)$character"""
+$fill\
+$cmd_duration\
+$line_break\
+[└─](bold mauve)$character"""
 
-right_format = """$cmd_duration"""
+right_format = ""
+
+[fill]
+symbol = " "
 
 [character]
 success_symbol = "[❯](bold mauve)"
@@ -31,48 +36,65 @@ vimcmd_replace_one_symbol = "[❮](bold mauve)"
 vimcmd_replace_symbol = "[❮](bold mauve)"
 vimcmd_visual_symbol = "[❮](bold yellow)"
 
-# Duration entry ─ 時間
+[os]
+disabled = false
+style = "bold lavender"
+format = "[$symbol]($style)"
+
+[os.symbols]
+Arch = "󰣇 "
+Linux = "󰌽 "
+
+[username]
+show_always = false
+style_user = "bold teal"
+style_root = "bold red"
+format = "[$user]($style) "
+
+[hostname]
+ssh_only = true
+style = "bold peach"
+format = "[@$hostname]($style) "
+
+# Duration
 [cmd_duration]
 min_time = 2000
-format = "[─ 時 $duration](bold yellow)"
+format = "[󱫐 $duration](bold yellow)"
 
-# Git entry
-[git_metrics]
-added_style = "green"
-deleted_style = "red"
-format = '(\([+$added]($added_style)/[-$deleted]($deleted_style)\))'
+# Git
+[git_branch]
+format = '[  $branch(:$remote_branch)]($style) '
+symbol = ""
+style = "bold mauve"
+
+[git_commit]
+format = '[\($hash$tag\)]($style) '
+style = "bold green"
+tag_disabled = false
+tag_symbol = " 󰓹 "
+
+[git_state]
+format = '[\($state( $progress_current/$progress_total)\)]($style) '
+style = "bold yellow"
 
 [git_status]
-ahead = '[](bold green) '
-conflicted = '[󱡂 ](bold red) '
-untracked = '[](bold purple) '
-staged = '[](bold green) '
-stashed = '[](cyan) '
-deleted = '[](bold red) '
-modified = '[ ](bold yellow) '
-behind = '[](bold yellow) '
-renamed = '[󰬴 ](bold blue) '
-up_to_date = ''
-diverged = '[󱓌 ](bold red) '
+ahead = '[󰜸](bold green)'
+behind = '[󰜯](bold yellow)'
+conflicted = '[󱡂](bold red)'
+untracked = '[](bold lavender)'
+staged = '[󰸞](bold green)'
+stashed = '[](bold sky)'
+deleted = '[󰆴](bold red)'
+modified = '[󰏫](bold peach)'
+renamed = '[󰬴](bold blue)'
+up_to_date = '[󰄬](bold green)'
+diverged = '[󱓌](bold red)'
 format = '([$all_status$ahead_behind]($style))'
 
-[git_branch]
-format = '[$symbol$branch(:$remote_branch)]($style) '
-symbol = "刀 "
+[git_metrics]
+disabled = true
 
-[hg_branch]
-symbol = " "
-
-[fossil_branch]
-symbol = " "
-
-# Gcloud entry
-[gcloud]
-format = "[$symbol]($style) "
-symbol = " "
-style = "bold blue"
-
-# Directory entry ─ 場所
+# Directory
 [directory]
 read_only = " 󰌾"
 truncation_length = 4
@@ -80,109 +102,79 @@ style = "bold lavender"
 format = "[$read_only]($read_only_style)[$path]($style) "
 truncation_symbol = "…/"
 
-# [directory.substitutions]
-# "Documents" = "󰈙 "
-# "Downloads" = " "
-# "Music" = " "
-# "Pictures" = " "
-# "Repos" = " "
-# "Videos" = " "
-# "obsidianVault" = "󰏪 󰠮 "
-# ".config" = " "
+[directory.substitutions]
+"Developer" = "󰈮 "
+".config" = " "
+"Documents" = "󰈙 "
+"Downloads" = "󰇚 "
+"Pictures" = "󰋩 "
+"Videos" = "󰕧 "
 
-# Custom entries
-[custom.neovim]
-command = 'bob ls | rg Used | awk "{print \$2}"' # shows output of command
-detect_folders = ["lua"]
-style = "green"
-format = "[ $output ]($style)"
-shell = ["bash"]
-
-[custom.hypr]
-style = "blue"
-format = "[ ]($style)"
-detect_files = ["hyprland.conf"]
-
-[custom.docker]
-files = ["Dockerfile", "docker-compose.yml", "docker-compose.yaml"]
-style = "bold blue"
-format = "[ ]($style)"
-
-
-[custom.giturl]
-# disabled = true
-description = "Display symbol for remote Git server"
-command = "check-git-remote"
-when = 'git rev-parse --is-inside-work-tree 2> /dev/null'
-shell = ["bash", "--noprofile", "--norc"]
-format = "$output  "
-
-# Nerd fonts preset
+# Language/tool modules
 [aws]
-symbol = "  "
+symbol = "  "
+format = '[$symbol($profile)(\($region\))]($style) '
 
 [buf]
-symbol = " "
+symbol = " "
 
 [bun]
-format = '[$symbol($version )]($style)'
-symbol = " "
+format = '[$symbol($version)]($style) '
+symbol = " "
 
 [c]
-format = '[$symbol($version )]($style)'
-symbol = " "
+format = '[$symbol($version)]($style) '
+symbol = " "
 
 [conda]
-symbol = " "
+symbol = " "
 
 [crystal]
-symbol = " "
+symbol = " "
 
 [dart]
-format = '[$symbol($version )]($style)'
-symbol = " "
+format = '[$symbol($version)]($style) '
+symbol = " "
 
 [docker_context]
-symbol = " "
+symbol = " "
+format = '[$symbol$context]($style) '
 
 [elixir]
-symbol = " "
+symbol = " "
 
 [elm]
-symbol = " "
+symbol = " "
 
 [fennel]
-symbol = " "
+symbol = " "
 
 [golang]
-format = '[$symbol($version )]($style)'
-symbol = " "
+format = '[$symbol($version)]($style) '
+symbol = " "
 
 [guix_shell]
-symbol = " "
+symbol = " "
 
 [haskell]
-symbol = " "
+symbol = " "
 
 [haxe]
-symbol = " "
-
-[hostname]
-ssh_symbol = " "
+symbol = " "
 
 [java]
-format = '[$symbol($version )]($style)'
-symbol = " "
+format = '[$symbol($version)]($style) '
+symbol = " "
 
 [julia]
-symbol = " "
+symbol = " "
 
 [kotlin]
-symbol = " "
+symbol = " "
 
 [lua]
-format = '[$symbol($version )]($style)'
-symbol = " "
+format = '[$symbol($version)]($style) '
+symbol = " "
 
 [memory_usage]
 symbol = "󰍛 "
@@ -194,102 +186,57 @@ symbol = "󰔷 "
 symbol = "󰆥 "
 
 [nix_shell]
-format = '[$symbol($version )]($style)'
-symbol = " "
+format = '[$symbol($version)]($style) '
+symbol = " "
 
 [nodejs]
-format = '[$symbol($version )]($style)'
-symbol = " "
+format = '[$symbol($version)]($style) '
+symbol = " "
 
 [ocaml]
-symbol = " "
-
-[os.symbols]
-Alpaquita = " "
-Alpine = " "
-AlmaLinux = " "
-Amazon = " "
-Android = " "
-Arch = " "
-Artix = " "
-CentOS = " "
-Debian = " "
-DragonFly = " "
-Emscripten = " "
-Fedora = " "
-FreeBSD = " "
-Garuda = "󰛓 "
-Gentoo = " "
-HardenedBSD = "󰞌 "
-Illumos = "󰈸 "
-Kali = " "
-Linux = " "
-Mabox = " "
-Macos = " "
-Manjaro = " "
-Mariner = " "
-MidnightBSD = " "
-Mint = " "
-NetBSD = " "
-NixOS = " "
-OpenBSD = "󰈺 "
-openSUSE = " "
-OracleLinux = "󰌷 "
-Pop = " "
-Raspbian = " "
-Redhat = " "
-RedHatEnterprise = " "
-RockyLinux = " "
-Redox = "󰀘 "
-Solus = "󰠳 "
-SUSE = " "
-Ubuntu = " "
-Unknown = " "
-Void = " "
-Windows = "󰍲 "
+symbol = " "
 
 [package]
 symbol = "󰏗 "
 
 [perl]
-symbol = " "
+symbol = " "
 
 [php]
-symbol = " "
+symbol = " "
 
 [pijul_channel]
-symbol = " "
+symbol = " "
 
 [python]
-format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
-symbol = " "
+format = '[${symbol}${pyenv_prefix}(${version})(\($virtualenv\))]($style) '
+symbol = " "
 
 [rlang]
 symbol = "󰟔 "
 
 [ruby]
-symbol = " "
+symbol = " "
 
 [rust]
-format = '[$symbol($version )]($style)'
-
-symbol = " "
+format = '[$symbol($version)]($style) '
+symbol = " "
 
 [scala]
-symbol = " "
+symbol = " "
 
 [swift]
-symbol = " "
+symbol = " "
 
 [vagrant]
-format = '[$symbol($version )]($style)'
-symbol = " "
+format = '[$symbol($version)]($style) '
+symbol = " "
 
 [zig]
-format = '[$symbol($version )]($style)'
-symbol = " "
+format = '[$symbol($version)]($style) '
+symbol = " "
 
-# Theme
+# Catppuccin Macchiato palette
 [palettes.catppuccin_macchiato]
 rosewater = "#f4dbd6"
 flamingo = "#f0c6c6"
@@ -317,5 +264,3 @@ surface0 = "#363a4f"
 base = "#24273a"
 mantle = "#1e2030"
 crust = "#181926"
-
-palette = "catppuccin_macchiato"
