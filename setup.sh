@@ -321,8 +321,12 @@ ok "Neovim plugins installed"
 # TPM (tmux plugin manager)
 if [ ! -f "$HOME/.config/tmux/plugins/tpm/tpm" ]; then
     rm -rf "$HOME/.config/tmux/plugins/tpm" 2>/dev/null || true
-    git clone https://github.com/tmux-plugins/tpm "$HOME/.config/tmux/plugins/tpm" 2>/dev/null || true
-    ok "TPM installed (run prefix+I in tmux to install plugins)"
+    mkdir -p "$HOME/.config/tmux/plugins"
+    if git clone https://github.com/tmux-plugins/tpm "$HOME/.config/tmux/plugins/tpm"; then
+        ok "TPM installed (run prefix+I in tmux to install plugins)"
+    else
+        warn "TPM clone failed — install manually: git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm"
+    fi
 else
     ok "TPM already installed"
 fi
