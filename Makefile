@@ -38,18 +38,21 @@ install: install-configs install-home install-scripts
 install-configs:
 	@echo "Deploying application configs to ~/.config/..."
 	@mkdir -p ~/.config
-	@cd config && stow -v -t ~/.config .
+	@cd config && stow -R --adopt -v -t ~/.config .
+	@git checkout -- config/
 	@echo "Configs deployed!"
 
 install-home:
 	@echo "Deploying home dotfiles..."
-	@cd home && stow -v -t ~ .
+	@cd home && stow -R --adopt -v -t ~ .
+	@git checkout -- home/
 	@echo "Home dotfiles deployed!"
 
 install-scripts:
 	@echo "Deploying scripts to ~/.local/bin/..."
 	@mkdir -p ~/.local/bin
-	@cd scripts && stow -v -t ~ .
+	@cd scripts && stow -R --adopt -v -t ~ .
+	@git checkout -- scripts/
 	@chmod +x ~/.local/bin/*.sh 2>/dev/null || true
 	@echo "Scripts deployed!"
 
