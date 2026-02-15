@@ -319,7 +319,8 @@ nvim --headless "+Lazy! sync" +qa 2>/dev/null || true
 ok "Neovim plugins installed"
 
 # TPM (tmux plugin manager)
-if [ ! -d "$HOME/.config/tmux/plugins/tpm" ]; then
+if [ ! -f "$HOME/.config/tmux/plugins/tpm/tpm" ]; then
+    rm -rf "$HOME/.config/tmux/plugins/tpm" 2>/dev/null || true
     git clone https://github.com/tmux-plugins/tpm "$HOME/.config/tmux/plugins/tpm" 2>/dev/null || true
     ok "TPM installed (run prefix+I in tmux to install plugins)"
 else
