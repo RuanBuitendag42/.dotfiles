@@ -31,6 +31,10 @@ Here’s your dotfiles repo—ready for action, just like a proper Boere setup! 
 - Project-specific instructions must be placed in `.github/instructions/` and include front matter for referencing.
 - This dotfiles repo is located at: `/home/ruanb/Developer/github/.dotfiles`
 
+**CRITICAL DEPLOYMENT RULE:**
+- NEVER run `stow` manually. Always use the Makefile targets (for example `make install-configs`, `make install-scripts`, or `make install`) to deploy or test symlinks.
+- The Makefile is the single entrypoint for deployments and will call `stow` with the correct arguments and safety checks. Running `stow` directly is forbidden in this repo's workflow.
+
 ## Project Overview
 
 This is a personal dotfiles repository for Arch Linux. It contains:
