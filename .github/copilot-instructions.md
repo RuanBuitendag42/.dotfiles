@@ -17,39 +17,43 @@ This is a personal dotfiles repository for Arch Linux. It contains:
 **Deployment**: GNU Stow for symlink management  
 **Shell**: ZSH (default) with zinit + Starship prompt
 
+
+## Secrets Management
+
+- All sensitive files (SSH keys, passwords, secrets) are encrypted in the repo using git-crypt.
+- GPG key for git-crypt is stored securely in Bitwarden.
+- Only authorized users with the GPG key can decrypt secrets.
+
 ## Repository Structure
 
+All documentation except README.md is now in `.github/instructions/` and must include front matter for referencing:
+
+```
+---
+description: 'Short summary of the file'
+applyTo: '**'
+---
+```
+
+Global/system-wide instructions (for Copilot context across all projects) should be placed in:
+`config/Code/User/prompts/sysinfo.instructions.md`
+
+Example structure:
 ```
 .dotfiles/
-├── config/              # XDG_CONFIG_HOME apps (~/.config/)
-│   ├── btop/           # System monitor (Catppuccin Macchiato)
-│   ├── dunst/          # Notification daemon
-│   ├── fastfetch/      # System info display
-│   ├── hypr/           # Hyprland + Hypridle + Hyprlock
-│   ├── kitty/          # Terminal (primary, Catppuccin Macchiato)
-│   ├── nvim/           # LazyVim + Catppuccin Macchiato
-│   ├── nushell/        # Alternative shell
-│   ├── sddm/           # Display manager theme
-│   ├── starship/       # Shell prompt
-│   ├── swaylock/       # Lock screen
-│   ├── tmux/           # Terminal multiplexer
-│   ├── waybar/         # Status bar
-│   ├── wofi/           # Application launcher
-│   └── yazi/           # File manager
-├── home/               # Home directory dotfiles (~/.zshrc)
-├── packages/           # Package lists for system reproduction
-│   ├── pacman.txt      # Native packages (categorized)
-│   └── aur.txt         # AUR packages
-├── scripts/            # Automation scripts
-│   └── .local/bin/     # powermenu.sh, wallpaper.sh, resolution.sh
-├── Makefile            # Main automation interface
-├── setup.sh            # Full system setup from scratch
-├── README.md           # Project overview
-├── .github/instructions/HYPRLAND.md         # Hyprland configuration docs
-├── .github/instructions/PROJECT_SETUP.md    # Detailed setup guide
-├── .github/instructions/THEMES.md           # Catppuccin Macchiato reference
-├── .github/instructions/NEOVIM.md           # Neovim/LazyVim learning roadmap
-
+├── config/
+├── home/
+├── packages/
+├── scripts/
+├── Makefile
+├── setup.sh
+├── README.md
+├── .github/instructions/HYPRLAND.md
+├── .github/instructions/PROJECT_SETUP.md
+├── .github/instructions/THEMES.md
+├── .github/instructions/NEOVIM.md
+├── .github/copilot-instructions.md
+└── config/Code/User/prompts/sysinfo.instructions.md
 ```
 
 ## Key Design Decisions
