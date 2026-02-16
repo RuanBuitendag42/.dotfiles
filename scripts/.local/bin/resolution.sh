@@ -10,9 +10,20 @@ set -euo pipefail
 # defaults (can be overridden by environment)
 MONITOR="${MONITOR:-HDMI-A-1}"
 RATE="${RATE:-60}"
+DEBUG=${DEBUG:-0}
+
+# allow a '--debug' or '-d' prefix to enable diagnostic output
+if [ "${1:-}" = "--debug" ] || [ "${1:-}" = "-d" ]; then
+    DEBUG=1
+    shift || true
+fi
 
 # hyprland config path (respects XDG_CONFIG_HOME)
 HYPRCONF="${XDG_CONFIG_HOME:-$HOME/.config}/hypr/hyprland.conf"
+
+_debug() {
+    [ "$DEBUG" -eq 1 ] && echo "[resolution.sh debug]" "$@" >&2 || true
+}
 
 _backup_hyprconf() {
     # backup the real file (follow symlink if necessary)
@@ -113,6 +124,7 @@ _get_current_monitor_info() {
         return 1
     fi
 
+    _debug "hyprctl monitors -j (truncated): ${json:0:800}"
     printf '%s' "$json" | python3 - "$mname" <<'PY' || return 1
 import sys, json
 mname = sys.argv[1] if len(sys.argv) > 1 else ""
@@ -161,33 +173,47 @@ except Exception:
 for m in data:
     if mname and m.get('name') != mname:
         continue
-    # 1) prefer explicit preferredMode if present
+    # 1) prefer explicit preferredMode if present (string or dict)
     pref = m.get('preferredMode')
     if pref:
         try:
-            res, rr = pref.split('@')
-            w, h = map(int, res.split('x'))
+            if isinstance(pref, dict):
+                w = int(pref.get('width') or pref.get('w'))
+                h = int(pref.get('height') or pref.get('h'))
+                rr = int(round(float(pref.get('refresh') or pref.get('refreshRate') or pref.get('refreshRateHz') or 60)))
+            else:
+                res, rr_s = str(pref).split('@')
+                w, h = map(int, res.split('x'))
+                rr = int(round(float(rr_s)))
             scale = int(round(m.get('scale', 1)))
-            print(f"{w} {h} {int(rr)} {scale}")
+            print(f"{w} {h} {rr} {scale}")
             sys.exit(0)
         except Exception:
             pass
     # 2) otherwise pick the availableMode with largest area, then highest refresh
-    modes = m.get('availableModes', []) or []
+    modes = m.get('availableModes') or m.get('modes') or []
     best = None
     for mode in modes:
         try:
-            res, rr = mode.split('@')
-            w, h = map(int, res.split('x'))
-            rr = int(rr)
-            area = w*h
-            if best is None or area > best[0] or (area == best[0] and rr > best[1]):
-                best = (area, rr, w, h)
+            if isinstance(mode, dict):
+                w = int(mode.get('width') or mode.get('w'))
+                h = int(mode.get('height') or mode.get('h'))
+                rr = int(round(float(mode.get('refresh') or mode.get('refreshRate') or mode.get('refreshRateHz') or 60)))
+            else:
+                # string like "2560x1440@144.000"
+                parts = str(mode).split('@')
+                res = parts[0]
+                rr = int(round(float(parts[1])) ) if len(parts) > 1 else 60
+                w, h = map(int, res.split('x'))
+            area = w * h
+            # prefer higher refresh first, then larger area
+            if best is None or rr > best[0] or (rr == best[0] and area > best[1]):
+                best = (rr, area, w, h)
         except Exception:
             continue
     if best:
         scale = int(round(m.get('scale', 1)))
-        print(f"{best[2]} {best[3]} {best[1]} {scale}")
+        print(f"{best[2]} {best[3]} {best[0]} {scale}")
         sys.exit(0)
     # 3) fallback to current active mode
     if 'width' in m and 'height' in m:
