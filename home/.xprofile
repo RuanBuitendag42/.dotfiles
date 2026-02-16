@@ -11,9 +11,14 @@ if [[ -d "$HOME/.tfenv/bin" ]]; then
 fi
 
 if [[ -d "$HOME/.tfenv/versions" ]]; then
-	for vbin in "$HOME/.tfenv/versions"/*/bin; do
-		if [[ -d "$vbin" ]]; then
-			PATH="$vbin:$PATH"
+	for vdir in "$HOME/.tfenv/versions"/*; do
+		if [[ -d "$vdir" ]]; then
+			# prefer a bin/ subdir if present, otherwise add the version dir
+			if [[ -d "$vdir/bin" ]]; then
+				PATH="$vdir/bin:$PATH"
+			elif [[ -x "$vdir/terraform" ]]; then
+				PATH="$vdir:$PATH"
+			fi
 		fi
 	done
 	export PATH
