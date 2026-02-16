@@ -45,11 +45,11 @@ This is a personal dotfiles repository for Arch Linux. It contains:
 ├── Makefile            # Main automation interface
 ├── setup.sh            # Full system setup from scratch
 ├── README.md           # Project overview
-├── HYPRLAND.md         # Hyprland configuration docs
-├── PROJECT_SETUP.md    # Detailed setup guide
-├── THEMES.md           # Catppuccin Macchiato reference
-├── TERMINAL_COMPARISON.md  # Kitty vs Ghostty analysis
-└── NEOVIM.md           # Neovim/LazyVim learning roadmap
+├── .github/instructions/HYPRLAND.md         # Hyprland configuration docs
+├── .github/instructions/PROJECT_SETUP.md    # Detailed setup guide
+├── .github/instructions/THEMES.md           # Catppuccin Macchiato reference
+├── .github/instructions/NEOVIM.md           # Neovim/LazyVim learning roadmap
+
 ```
 
 ## Key Design Decisions
@@ -198,8 +198,11 @@ set -e  # Exit on error
 - **README.md**: Overview, quick start, what's included
 - **PROJECT_SETUP.md**: Step-by-step fresh install guide
 - **HYPRLAND.md**: Hyprland DE configuration and key bindings
-- **THEMES.md**: Catppuccin Macchiato color reference
-- **Comparison docs**: Analysis and recommendations
+- **THEMES.md**: Catppuccin Macchiato color reference (now in .github/instructions/)
+- **NEOVIM.md**: Neovim/LazyVim learning roadmap (now in .github/instructions/)
+- **HYPRLAND.md**: Hyprland config docs (now in .github/instructions/)
+- **PROJECT_SETUP.md**: Setup guide (now in .github/instructions/)
+
 
 ## Common Tasks
 
@@ -372,18 +375,18 @@ When working on this repository:
 2. **No summary docs**: Don't create CHANGES.md, SUMMARY.md, RESTRUCTURE.md, etc.
 3. **Keep it clean**: Only commit essential files (configs, scripts, main docs)
 4. **Check before finishing**: Always run cleanup before marking work complete
-5. **Core docs only**: Keep README.md, PROJECT_SETUP.md, THEMES.md, TERMINAL_COMPARISON.md, and component-specific docs
+5. **Core docs only**: Keep README.md in root. Move all other documentation to .github/instructions/. Remove TERMINAL_COMPARISON.md and any comparison/summary docs.
 
 **Files to keep:**
 - README.md (main overview)
-- PROJECT_SETUP.md (setup guide)
-- HYPRLAND.md (Hyprland config docs)
-- THEMES.md (Catppuccin Macchiato reference)
-- TERMINAL_COMPARISON.md (Kitty vs Ghostty)
-- NEOVIM.md (Neovim/LazyVim learning roadmap)
+- .github/instructions/HYPRLAND.md (Hyprland config docs)
+- .github/instructions/PROJECT_SETUP.md (setup guide)
+- .github/instructions/THEMES.md (Catppuccin Macchiato reference)
+- .github/instructions/NEOVIM.md (Neovim/LazyVim learning roadmap)
 - .github/copilot-instructions.md (this file)
 
 **Files to remove:**
+- TERMINAL_COMPARISON.md
 - RESTRUCTURE_SUMMARY.md
 - CHANGES.md, UPDATE.md, etc.
 - Any temporary notes/summaries
