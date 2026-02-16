@@ -5,3 +5,21 @@ export PATH="$HOME/.local/bin:$PATH"
 # Add any additional PATH modifications here (applies to all sessions):
 # (Moved from .zshrc)
 
+# tfenv and user-local bins
+if [[ -d "$HOME/.tfenv/bin" ]]; then
+	export PATH="$HOME/.tfenv/bin:$PATH"
+fi
+
+if [[ -d "$HOME/.tfenv/versions" ]]; then
+	for vbin in "$HOME/.tfenv/versions"/*/bin; do
+		if [[ -d "$vbin" ]]; then
+			PATH="$vbin:$PATH"
+		fi
+	done
+	export PATH
+fi
+
+if [[ -d "$HOME/.local/bin" ]]; then
+	export PATH="$HOME/.local/bin:$PATH"
+fi
+
