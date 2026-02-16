@@ -1,0 +1,7 @@
+# Encrypt all files in secrets/ and any file ending with .secret, .key, .enc, .password, .env.secret
+secrets/** filter=git-crypt diff=git-crypt
+*.secret filter=git-crypt diff=git-crypt
+*.key filter=git-crypt diff=git-crypt
+*.enc filter=git-crypt diff=git-crypt
+*.password filter=git-crypt diff=git-crypt
+*.env.secret filter=git-crypt diff=git-crypt
