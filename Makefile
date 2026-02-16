@@ -13,7 +13,7 @@ help:
 	@echo "  make install-configs  Deploy ~/.config/ application configs only"
 	@echo "  make install-scripts  Deploy ~/.local/bin/ scripts only"
 	@echo "  make install-home     Deploy home dotfiles (~/.zshrc, etc.)"
-	@echo "  make install-sddm    Deploy SDDM theme config (requires sudo)"
+	@echo "  make install-sddm    Deploy SDDM theme config (sudo only if change needed)"
 	@echo ""
 	@echo "Maintenance:"
 	@echo "  make backup           Backup existing configs before deploying"
@@ -58,10 +58,17 @@ install-scripts:
 	@echo "Scripts deployed!"
 
 install-sddm:
-	@echo "Deploying SDDM theme config (requires sudo)..."
-	@sudo mkdir -p /etc/sddm.conf.d
-	@sudo cp -v config/sddm/theme.conf /etc/sddm.conf.d/theme.conf
-	@echo "SDDM theme set to catppuccin-macchiato-mauve!"
+	@echo "Deploying SDDM theme config (sudo only if change needed)..."
+	@TARGET=/etc/sddm.conf.d/theme.conf; \
+	SRC=config/sddm/theme.conf; \
+	if [ -f "$$TARGET" ] && cmp -s "$$SRC" "$$TARGET"; then \
+		echo "SDDM theme already up-to-date; no sudo required."; \
+	else \
+		echo "SDDM theme differs or missing — deploying (sudo may be required)..."; \
+		sudo mkdir -p /etc/sddm.conf.d; \
+		sudo cp -v "$$SRC" "$$TARGET"; \
+		echo "SDDM theme set to catppuccin-macchiato-mauve!"; \
+	fi
 
 # ─── Maintenance ────────────────────────────────────────────────
 
