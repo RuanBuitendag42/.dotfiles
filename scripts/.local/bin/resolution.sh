@@ -26,14 +26,8 @@ _debug() {
 }
 
 _backup_hyprconf() {
-    # backup the real file (follow symlink if necessary)
-    local target="${1:-$HYPRCONF}"
-    if [ -L "$target" ]; then
-        target=$(readlink -f "$target")
-    fi
-    if [ -f "$target" ]; then
-        cp -- "$target" "$target.bak.$(date +%Y%m%d_%H%M%S)"
-    fi
+    # backups disabled by request — no-op to keep call-sites safe
+    return 0
 }
 
 _apply_now() {
@@ -60,9 +54,7 @@ _persist_to_conf() {
         return 1
     fi
 
-    _backup_hyprconf "$target_conf"
-
-    # Replace the monitor line for this output if present; otherwise replace first monitor= line; otherwise insert near Monitor header or at top.
+    # (backups disabled) Replace the monitor line for this output if present; otherwise replace first monitor= line; otherwise insert near Monitor header or at top.
     if grep -qE "^\s*monitor\s*=.*${monitor_name}" "$target_conf"; then
         sed -i -E "s|(^\s*monitor\s*=).*|\1 ${mode_str}|" "$target_conf"
     elif grep -qE "^\s*monitor\s*=" "$target_conf"; then
@@ -119,17 +111,14 @@ _get_current_monitor_info() {
         return 1
     fi
 
-    local json
-    if ! json=$(hyprctl monitors -j 2>/dev/null) || [ -z "${json//[[:space:]]/}" ]; then
-        return 1
-    fi
-
-    _debug "hyprctl monitors -j (truncated): ${json:0:800}"
-    printf '%s' "$json" | python3 - "$mname" <<'PY' || return 1
-import sys, json
+    # call hyprctl from Python to avoid stdin/heredoc piping problems
+    _debug "hyprctl monitors -j (live)"
+    python3 - "$mname" <<'PY' || return 1
+import sys, json, subprocess
 mname = sys.argv[1] if len(sys.argv) > 1 else ""
-s = sys.stdin.read()
-if not s.strip():
+try:
+    s = subprocess.check_output(["hyprctl","monitors","-j"], stderr=subprocess.DEVNULL).decode()
+except Exception:
     sys.exit(1)
 try:
     data = json.loads(s)
@@ -155,16 +144,13 @@ _get_best_monitor_info() {
         return 1
     fi
 
-    local json
-    if ! json=$(hyprctl monitors -j 2>/dev/null) || [ -z "${json//[[:space:]]/}" ]; then
-        return 1
-    fi
-
-    printf '%s' "$json" | python3 - "$mname" <<'PY' || return 1
-import sys, json
+    _debug "hyprctl monitors -j (live)"
+    python3 - "$mname" <<'PY' || return 1
+import sys, json, subprocess, re
 mname = sys.argv[1] if len(sys.argv) > 1 else ""
-s = sys.stdin.read()
-if not s.strip():
+try:
+    s = subprocess.check_output(["hyprctl","monitors","-j"], stderr=subprocess.DEVNULL).decode()
+except Exception:
     sys.exit(1)
 try:
     data = json.loads(s)
@@ -184,7 +170,8 @@ for m in data:
             else:
                 res, rr_s = str(pref).split('@')
                 w, h = map(int, res.split('x'))
-                rr = int(round(float(rr_s)))
+                rr_num = re.sub(r'[^0-9.]', '', rr_s)
+                rr = int(round(float(rr_num))) if rr_num else 60
             scale = int(round(m.get('scale', 1)))
             print(f"{w} {h} {rr} {scale}")
             sys.exit(0)
@@ -203,7 +190,9 @@ for m in data:
                 # string like "2560x1440@144.000"
                 parts = str(mode).split('@')
                 res = parts[0]
-                rr = int(round(float(parts[1])) ) if len(parts) > 1 else 60
+                rr_s = parts[1] if len(parts) > 1 else ''
+                rr_num = re.sub(r'[^0-9.]', '', rr_s)
+                rr = int(round(float(rr_num))) if rr_num else 60
                 w, h = map(int, res.split('x'))
             area = w * h
             # prefer higher refresh first, then larger area
