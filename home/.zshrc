@@ -67,10 +67,8 @@ bindkey '^k' up-line-or-search
 bindkey '^j' down-line-or-search
 
 eval "$(starship init zsh)"
-export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
-# Add local bin to PATH (scripts deployed via stow)
-export PATH="$HOME/.local/bin:$PATH"
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
@@ -137,3 +135,5 @@ if command -v ionic &>/dev/null && type compdef &>/dev/null; then
   compdef __ionic ionic
 fi
 
+
+. "$HOME/.local/share/../bin/env"

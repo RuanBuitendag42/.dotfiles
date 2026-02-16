@@ -178,6 +178,18 @@ HAS_EXISTING=false
 for item in .zshrc; do
     [ -f "$HOME/$item" ] && [ ! -L "$HOME/$item" ] && HAS_EXISTING=true
 done
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+step "Install uvx (universal virtualenv)"
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+if ! command -v uvx &> /dev/null; then
+    echo "  Installing uvx via official script..."
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    ok "uvx installed"
+else
+    ok "uvx already installed"
+fi
+
 for dir in nvim kitty tmux starship hypr waybar wofi dunst swaylock btop yazi; do
     [ -d "$HOME/.config/$dir" ] && [ ! -L "$HOME/.config/$dir" ] && HAS_EXISTING=true
 done

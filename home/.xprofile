@@ -1,0 +1,7 @@
+# ~/.xprofile
+# Ensures ~/.local/bin is in PATH for all GUI apps (VSCode, etc)
+export PATH="$HOME/.local/bin:$PATH"
+
+# Add any additional PATH modifications here (applies to all sessions):
+# (Moved from .zshrc)
+

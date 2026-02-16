@@ -117,6 +117,7 @@ make backup
 
 This creates a timestamped backup in `~/dotfiles_backup_YYYYMMDD_HHMMSS/`
 
+
 ### Deploy All Configurations
 
 ```bash
@@ -125,8 +126,27 @@ make install
 
 This will:
 1. Deploy application configs to `~/.config/`
-2. Deploy home dotfiles (`.zshrc`)
+2. Deploy home dotfiles (`.zshrc`, `.xprofile`)
 3. Install scripts to `~/.local/bin/`
+
+#### Note: GUI App PATH (VSCode, etc)
+To ensure all GUI apps (like VSCode) can find user binaries (e.g. `uvx`), `.xprofile` is included in `home/` and deployed to your home directory. It exports `$HOME/.local/bin` to your PATH for all sessions. You must log out and back in for this to take effect for GUI apps.
+
+---
+
+## 4. Post-Installation
+
+### Install uvx (Universal Virtualenv)
+
+`uvx` is installed automatically by `setup.sh`. To install manually:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+This ensures Python virtual environments work everywhere and is required for some workflows.
+
+---
 
 ### Alternative: Selective Deployment
 
