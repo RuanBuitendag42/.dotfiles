@@ -106,18 +106,33 @@ _get_current_monitor_info() {
     if ! command -v hyprctl >/dev/null 2>&1; then
         return 1
     fi
-    hyprctl monitors -j | python3 - "$mname" <<'PY'
-import json,sys
-mname=sys.argv[1] if len(sys.argv)>1 else ""
-data=json.load(sys.stdin)
+
+    # capture hyprctl output and ensure it's non-empty before feeding to python
+    local json
+    if ! json=$(hyprctl monitors -j 2>/dev/null) || [ -z "${json//[[:space:]]/}" ]; then
+        return 1
+    fi
+
+    printf '%s' "$json" | python3 - "$mname" <<'PY' || return 1
+import sys, json
+mname = sys.argv[1] if len(sys.argv) > 1 else ""
+s = sys.stdin.read()
+if not s.strip():
+    sys.exit(1)
+try:
+    data = json.loads(s)
+except Exception:
+    # invalid or empty JSON — exit silently with non-zero status
+    sys.exit(1)
 for m in data:
-    if not mname or m['name']==mname:
-        width=m.get('width')
-        height=m.get('height')
-        rr=int(round(m.get('refreshRate',60)))
-        scale=int(round(m.get('scale',1)))
+    if not mname or m.get('name') == mname:
+        width = m.get('width')
+        height = m.get('height')
+        rr = int(round(m.get('refreshRate', 60)))
+        scale = int(round(m.get('scale', 1)))
         print(f"{width} {height} {rr} {scale}")
         sys.exit(0)
+sys.exit(1)
 PY
 }
 
