@@ -3,7 +3,13 @@ description: 'Global system and infrastructure context for Copilot across all pr
 applyTo: '**'
 ---
 
+
 # Global System Instructions for Copilot
+
+## Important Note
+
+- Project-specific instructions must be placed in `.github/instructions/` and include front matter for referencing.
+- This dotfiles repo is located at: `/home/ruanb/Developer/github/.dotfiles`
 
 ## User & System
 - **Owner:** Ruan Buitendag (@RuanBuitendag42)
