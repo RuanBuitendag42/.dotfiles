@@ -1,3 +1,7 @@
+---
+description: 'Neovim/LazyVim learning roadmap and config notes for .dotfiles'
+applyTo: '**'
+---
 # Neovim (LazyVim) Roadmap
 
 > Next steps for leveling up your Neovim skills and config.

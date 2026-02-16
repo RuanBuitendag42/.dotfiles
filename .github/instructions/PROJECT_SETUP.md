@@ -1,3 +1,7 @@
+---
+description: 'Step-by-step setup guide for .dotfiles on Arch Linux'
+applyTo: '**'
+---
 # 🚀 Project Setup Instructions
 
 Complete guide for setting up your dotfiles on a fresh Arch Linux system.

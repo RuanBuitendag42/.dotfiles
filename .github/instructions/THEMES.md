@@ -1,3 +1,8 @@
+#
+---
+description: 'Catppuccin Macchiato color reference and theming for .dotfiles'
+applyTo: '**'
+---
 # 🎨 Catppuccin Macchiato Theme
 
 > **IMPORTANT**: This is THE theme for this entire setup. Catppuccin Macchiato EVERYWHERE!

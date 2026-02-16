@@ -1,3 +1,7 @@
+---
+description: 'Hyprland configuration and key bindings for .dotfiles'
+applyTo: '**'
+---
 # Hyprland Configuration
 
 Complete Hyprland setup with **Catppuccin Macchiato** theme throughout.
