@@ -101,13 +101,13 @@ _detect_monitor_if_needed() {
 }
 
 # return: width height refresh scale  (for given monitor name)
+# This returns the CURRENT active mode (fallback) — used by `current` output.
 _get_current_monitor_info() {
     local mname="${1:-}"
     if ! command -v hyprctl >/dev/null 2>&1; then
         return 1
     fi
 
-    # capture hyprctl output and ensure it's non-empty before feeding to python
     local json
     if ! json=$(hyprctl monitors -j 2>/dev/null) || [ -z "${json//[[:space:]]/}" ]; then
         return 1
@@ -122,7 +122,6 @@ if not s.strip():
 try:
     data = json.loads(s)
 except Exception:
-    # invalid or empty JSON — exit silently with non-zero status
     sys.exit(1)
 for m in data:
     if not mname or m.get('name') == mname:
@@ -136,14 +135,81 @@ sys.exit(1)
 PY
 }
 
+
+# return: width height refresh scale for the BEST / PREFERRED available mode
+_get_best_monitor_info() {
+    local mname="${1:-}"
+    if ! command -v hyprctl >/dev/null 2>&1; then
+        return 1
+    fi
+
+    local json
+    if ! json=$(hyprctl monitors -j 2>/dev/null) || [ -z "${json//[[:space:]]/}" ]; then
+        return 1
+    fi
+
+    printf '%s' "$json" | python3 - "$mname" <<'PY' || return 1
+import sys, json
+mname = sys.argv[1] if len(sys.argv) > 1 else ""
+s = sys.stdin.read()
+if not s.strip():
+    sys.exit(1)
+try:
+    data = json.loads(s)
+except Exception:
+    sys.exit(1)
+for m in data:
+    if mname and m.get('name') != mname:
+        continue
+    # 1) prefer explicit preferredMode if present
+    pref = m.get('preferredMode')
+    if pref:
+        try:
+            res, rr = pref.split('@')
+            w, h = map(int, res.split('x'))
+            scale = int(round(m.get('scale', 1)))
+            print(f"{w} {h} {int(rr)} {scale}")
+            sys.exit(0)
+        except Exception:
+            pass
+    # 2) otherwise pick the availableMode with largest area, then highest refresh
+    modes = m.get('availableModes', []) or []
+    best = None
+    for mode in modes:
+        try:
+            res, rr = mode.split('@')
+            w, h = map(int, res.split('x'))
+            rr = int(rr)
+            area = w*h
+            if best is None or area > best[0] or (area == best[0] and rr > best[1]):
+                best = (area, rr, w, h)
+        except Exception:
+            continue
+    if best:
+        scale = int(round(m.get('scale', 1)))
+        print(f"{best[2]} {best[3]} {best[1]} {scale}")
+        sys.exit(0)
+    # 3) fallback to current active mode
+    if 'width' in m and 'height' in m:
+        width = m.get('width')
+        height = m.get('height')
+        rr = int(round(m.get('refreshRate', 60)))
+        scale = int(round(m.get('scale', 1)))
+        print(f"{width} {height} {rr} {scale}")
+        sys.exit(0)
+sys.exit(1)
+PY
+}
+
 _detect_monitor_if_needed
 
-# No-args behaviour: persist current active mode for the (detected) monitor
+# No-args behaviour: detect the monitor's preferred / best available mode and persist it
 if [ "$#" -eq 0 ]; then
     if command -v hyprctl >/dev/null 2>&1; then
-        read -r W H R S < <(_get_current_monitor_info "$MONITOR") || true
+        # prefer the monitor's preferred / max available mode (so we move from 1080->1440@144 where supported)
+        read -r W H R S < <(_get_best_monitor_info "$MONITOR") || true
         if [ -z "${W:-}" ]; then
-            echo "Could not detect current monitor mode for $MONITOR" >&2
+            echo "Could not detect preferred monitor mode for $MONITOR" >&2
             exit 1
         fi
         MODE_STR="$MONITOR, ${W}x${H}@${R}, auto, ${S}"
