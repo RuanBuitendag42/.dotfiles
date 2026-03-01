@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Mailspring
+Comment=The best email app for people and teams at work
+GenericName=Mail Client
+Exec=/home/ruanb/.local/bin/mailspring %U
+Icon=mailspring
+Type=Application
+StartupNotify=true
+Categories=Network;Email;
+MimeType=x-scheme-handler/mailto;x-scheme-handler/mailspring;
+Keywords=email;mail;

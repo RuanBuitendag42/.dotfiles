@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Launch Mailspring with explicit backend to avoid "Encryption is not
+# available" errors on Linux when using GNOME keyring.  Also force the
+# Ozone platform to X11; Electron's Wayland support is flaky and without
+# this argument the window often doesn't ever render (you'll only see a
+# tray icon).  This is the real fix, the Hyprland window-rule just makes
+# the window float if tiling still shenanigans occur.
+
+exec /usr/bin/mailspring \
+  --password-store="gnome-libsecret" \
+  --ozone-platform=x11 "$@"
