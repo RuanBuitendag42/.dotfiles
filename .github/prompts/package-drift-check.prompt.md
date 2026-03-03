@@ -1,6 +1,6 @@
 ---
 description: 'Detect package drift between installed system and saved package lists'
-agent: 'package-manager'
+agent: 'system-ops'
 ---
 
 # Package Drift Check

@@ -1,9 +1,9 @@
 ---
 description: 'Catppuccin Macchiato consistency auditor — identifies theme violations across all config files (read-only)'
-tools: ['read/readFile', 'search/textSearch', 'search/fileSearch', 'search/listDirectory', 'search/codebase', 'read/problems']
+tools: ['read', 'search']
 handoffs:
   - label: 'Fix Config'
-    agent: 'config-manager'
+    agent: 'dotfiles-implementer'
     prompt: 'Fix theme violations found in application config files'
   - label: 'Fix Hyprland Theme'
     agent: 'hyprland-engineer'
@@ -117,7 +117,7 @@ Present findings as:
 2. **Compare** found colors against the Macchiato palette
 3. **Check** per-app theme settings from the checklist
 4. **Compile** violations into the structured report table
-5. **Hand off** to config-manager or hyprland-engineer for fixes
+5. **Hand off** to dotfiles-implementer or hyprland-engineer for fixes
 
 ## Guidelines
 

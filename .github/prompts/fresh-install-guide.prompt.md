@@ -1,6 +1,6 @@
 ---
 description: 'Complete fresh Arch Linux system setup workflow using setup.sh and Makefile'
-agent: 'setup-deployer'
+agent: 'system-ops'
 ---
 
 # Fresh Install Guide

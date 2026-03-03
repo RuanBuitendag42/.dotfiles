@@ -1,13 +1,13 @@
 ---
 description: 'Hyprland Desktop Environment specialist — compositor, waybar, wofi, dunst, keybindings, animations, and window rules'
-tools: ['read/readFile', 'edit/editFiles', 'edit/createFile', 'search/textSearch', 'search/fileSearch', 'search/listDirectory', 'execute/runInTerminal', 'execute/getTerminalOutput']
+tools: ['read', 'edit', 'search', 'execute']
 handoffs:
   - label: 'Verify Theme'
     agent: 'theme-enforcer'
     prompt: 'Verify Catppuccin Macchiato colors in the modified Hyprland stack configs'
-  - label: 'Edit Waybar CSS'
-    agent: 'config-manager'
-    prompt: 'Edit Waybar CSS styling in config/waybar/style.css'
+  - label: 'Edit General Config'
+    agent: 'dotfiles-implementer'
+    prompt: 'Edit non-Hyprland config files (Kitty, tmux, starship, etc.)'
 ---
 
 # Hyprland Engineer
@@ -102,4 +102,4 @@ Inactive borders: `$surface0`
 - NEVER run `stow` directly — use Makefile targets
 - NEVER use cyberpunk aesthetic — it's 未来侍 (futuristic samurai)
 - NEVER remove existing keybindings without user confirmation
-- For waybar CSS changes, can delegate to config-manager
+- For non-Hyprland config changes, can delegate to dotfiles-implementer

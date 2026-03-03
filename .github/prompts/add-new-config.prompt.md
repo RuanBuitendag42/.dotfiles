@@ -1,6 +1,6 @@
 ---
 description: 'Step-by-step workflow for adding a new application config to the dotfiles repo'
-agent: 'config-manager'
+agent: 'dotfiles-implementer'
 ---
 
 # Add New Application Config
@@ -25,7 +25,7 @@ Walk me through adding a new application's configuration to this dotfiles reposi
 
 7. **Test** — Run `make test` if syntax validation is available for this config format.
 
-8. **Update documentation** — Add the app to the config-manager knowledge map if it's a permanent addition.
+8. **Update documentation** — Add the app to the dotfiles-implementer knowledge map if it's a permanent addition.
 
 9. **Commit** — Use conventional commits: `feat: add <appname> config with Macchiato theme`
 
