@@ -26,6 +26,16 @@
 			"url": "https://api.githubcopilot.com/mcp/",
 			"gallery": "https://api.mcp.github.com",
 			"version": "0.30.3"
+		},
+		"awesome-copilot": {
+			"type": "stdio",
+			"command": "docker",
+			"args": [
+				"run",
+				"-i",
+				"--rm",
+				"ghcr.io/github/awesome-copilot-mcp"
+			]
 		}
 	},
 	"inputs": [

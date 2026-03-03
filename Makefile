@@ -2,7 +2,7 @@
 # Arch Linux
 SHELL := /bin/bash
 
-.PHONY: help install install-configs install-scripts backup status test clean update migrate packages-save packages-diff
+.PHONY: help install install-configs install-scripts backup status test clean update migrate packages-save packages-diff genesis-status genesis-validate
 
 # Default target
 help:
@@ -29,6 +29,10 @@ help:
 	@echo "System:"
 	@echo "  make migrate          Run system cleanup/migration script"
 	@echo "  make orphans          Remove orphan packages"
+	@echo ""
+	@echo "Genesis (Agent of Agents):"
+	@echo "  make genesis-status   Show all Genesis agents and skills"
+	@echo "  make genesis-validate Validate Genesis file integrity"
 	@echo ""
 
 # ─── Deployment ─────────────────────────────────────────────────
@@ -202,6 +206,71 @@ migrate:
 	@echo "Running system migration..."
 	@bash ./migrate.sh
 	@echo "Migration complete!"
+
+# ─── Genesis ────────────────────────────────────────────────────
+
+GENESIS_DIR := config/Code/User/prompts
+GENESIS_DEPLOYED := $(HOME)/.config/Code/User/prompts
+
+genesis-status:
+	@echo "Genesis Agent Status"
+	@echo ""
+	@echo "─── Agents ───"
+	@find $(GENESIS_DIR) -name '*.agent.md' -printf '  %f\n' 2>/dev/null | sort || echo "  No agents found"
+	@echo ""
+	@echo "─── Skills ───"
+	@find $(GENESIS_DIR)/genesis-skills -name 'SKILL.md' -printf '  %h\n' 2>/dev/null | sed 's|.*/||' | sort || echo "  No skills found"
+	@echo ""
+	@echo "─── Instructions ───"
+	@find $(GENESIS_DIR) -maxdepth 1 -name '*.instructions.md' -printf '  %f\n' 2>/dev/null | sort || echo "  No instructions found"
+	@echo ""
+	@echo "─── Deployed (symlinked) ───"
+	@if [ -L "$(GENESIS_DEPLOYED)/genesis.agent.md" ]; then \
+		echo "  Genesis orchestrator: symlinked"; \
+	else \
+		echo "  Genesis orchestrator: NOT deployed (run make install-configs)"; \
+	fi
+	@DEPLOYED=$$(find $(GENESIS_DEPLOYED) -name 'genesis-*.agent.md' -type l 2>/dev/null | wc -l); \
+	echo "  Sub-agents deployed: $$DEPLOYED"
+	@SKILLS=$$(find $(GENESIS_DEPLOYED)/genesis-skills -name 'SKILL.md' -type l 2>/dev/null | wc -l); \
+	echo "  Skills deployed: $$SKILLS"
+
+genesis-validate:
+	@echo "Validating Genesis files..."
+	@echo ""
+	@ERRORS=0; \
+	for f in $$(find $(GENESIS_DIR) -name '*.agent.md'); do \
+		if ! head -1 "$$f" | grep -q '^---'; then \
+			echo "  [ERROR] Missing frontmatter: $$f"; \
+			ERRORS=$$((ERRORS+1)); \
+		else \
+			echo "  [OK] $$f"; \
+		fi; \
+	done; \
+	for f in $$(find $(GENESIS_DIR) -name '*.instructions.md'); do \
+		if ! head -1 "$$f" | grep -q '^---'; then \
+			echo "  [ERROR] Missing frontmatter: $$f"; \
+			ERRORS=$$((ERRORS+1)); \
+		else \
+			echo "  [OK] $$f"; \
+		fi; \
+	done; \
+	for skill in $$(find $(GENESIS_DIR)/genesis-skills -name 'SKILL.md' 2>/dev/null); do \
+		DIR=$$(basename $$(dirname "$$skill")); \
+		if ! grep -q "name: $$DIR" "$$skill" 2>/dev/null; then \
+			echo "  [ERROR] SKILL.md name mismatch in: $$DIR"; \
+			ERRORS=$$((ERRORS+1)); \
+		else \
+			echo "  [OK] Skill: $$DIR"; \
+		fi; \
+	done; \
+	echo ""; \
+	if [ $$ERRORS -gt 0 ]; then \
+		echo "Validation FAILED with $$ERRORS error(s)"; \
+		exit 1; \
+	else \
+		echo "Validation PASSED — all Genesis files are valid!"; \
+	fi
 
 orphans:
 	@echo "Checking for orphan packages..."
