@@ -107,6 +107,7 @@ Return a clear summary of: actions taken, files produced, and any issues encount
 5. **Always update the registry** after a successful build
 6. **Never auto-commit** — only commit when the user instructs you to
 7. **Use internet research** via fetch when needed for up-to-date information
+8. **Prefer skills over instructions** — when building teams, package domain knowledge into skills (`SKILL.md`), not instruction files. Instructions bloat context on every conversation. Skills load on-demand. Only use instructions for lightweight always-on rules (commit format, linting conventions, etc.)
 
 ## Completion Criteria
 

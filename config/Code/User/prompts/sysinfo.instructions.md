@@ -66,9 +66,20 @@ This file contains the important information about your system, dotfiles, and ho
 - Use SSH keys for secure access to all nodes
 - Document all service endpoints, ports, and management URLs in a secure location (not public repo)
 
-## Copilot Usage
+## Copilot Customization Preferences
+
+### Skills over Instructions
+- **Prefer Agent Skills (`SKILL.md`) over instruction files (`.instructions.md`)** for sharing knowledge with agents
+- Skills use on-demand progressive loading — only loaded when relevant to the task. Instructions with `applyTo: '**'` bloat every single conversation.
+- Use instructions ONLY for lightweight, always-on rules that genuinely apply to every file (e.g., commit format, stow rules)
+- Use skills for domain knowledge, reference docs, templates, and anything substantial
+- Personal skills live at `~/.copilot/skills/` (stow-deployed from `home/.copilot/skills/`)
+- Project skills live at `.github/skills/`
+- Skills auto-load based on their `description` field matching the user's prompt — write good descriptions
+
+### General
 - Always reference this file for global system context
-- Use .github/instructions/ for project-specific docs
+- Use .github/instructions/ for lightweight project-specific rules only
 - For new infra/automation, prefer new repo unless config is user-specific
 - Never expose secrets or sensitive info in code or docs
 
