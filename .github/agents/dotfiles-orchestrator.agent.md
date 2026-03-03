@@ -1,7 +1,7 @@
 ---
 description: 'Master orchestrator for dotfiles and system management — delegates ALL work to specialist agents via runSubagent invocation'
 agents: ["*"]
-tools: ['agent', 'read', 'search', 'todo', 'vscode']
+tools: ['agent', 'read', 'edit', 'search', 'execute', 'todo', 'vscode']
 handoffs:
   - label: 'Research'
     agent: 'dotfiles-researcher'
