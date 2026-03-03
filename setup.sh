@@ -212,33 +212,58 @@ step "7/9 - Deploy Dotfiles"
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 cd "$DOTFILES_DIR"
 
+# Helper: detect conflicts, backup, then stow (no --adopt, no git checkout)
+safe_stow() {
+    local pkg_dir="$1"
+    local target_dir="$2"
+    local extra_flags="${3:-}"
+
+    # Dry-run to detect conflicting regular files
+    local conflicts
+    conflicts=$(cd "$pkg_dir" && stow -n --no-folding $extra_flags -v -t "$target_dir" . 2>&1 | \
+        grep 'existing target is neither a link nor a directory' | \
+        sed 's/.*existing target is neither a link nor a directory: //')
+
+    if [ -n "$conflicts" ]; then
+        local bkdir="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
+        warn "Conflicts found — backing up to $bkdir"
+        echo "$conflicts" | while IFS= read -r file; do
+            local src="$target_dir/$file"
+            if [ -f "$src" ] && [ ! -L "$src" ]; then
+                local dest="$bkdir/$file"
+                mkdir -p "$(dirname "$dest")"
+                mv "$src" "$dest"
+                echo "    Backed up: $file"
+            fi
+        done
+    fi
+
+    # Stow cleanly — repo is never modified
+    cd "$pkg_dir" && stow -R --no-folding $extra_flags -v -t "$target_dir" . 2>&1 | tail -5
+}
+
 # Application configs
 echo "  Deploying application configs..."
 mkdir -p "$HOME/.config"
-cd config && stow --adopt -v -t "$HOME/.config" . 2>&1 | tail -5
+safe_stow "$DOTFILES_DIR/config" "$HOME/.config" "--ignore='sddm'"
 cd "$DOTFILES_DIR"
 ok "Application configs deployed"
 
 # Home dotfiles
 echo "  Deploying home dotfiles..."
-cd home && stow --adopt -v -t "$HOME" . 2>&1 | tail -5
+safe_stow "$DOTFILES_DIR/home" "$HOME"
 cd "$DOTFILES_DIR"
 ok "Home dotfiles deployed"
 
 # Scripts
 echo "  Deploying scripts..."
 mkdir -p "$HOME/.local/bin"
-cd scripts && stow --adopt -v -t "$HOME" . 2>&1 | tail -5
+safe_stow "$DOTFILES_DIR/scripts" "$HOME"
 cd "$DOTFILES_DIR"
 chmod +x "$HOME/.local/bin/"*.sh 2>/dev/null || true
 ok "Scripts deployed"
 
-# Restore any files that got adopted (override system files with repo versions)
-cd "$DOTFILES_DIR"
-git checkout -- config/ home/ scripts/ 2>/dev/null || true
-ok "Repo state verified"
-
-# Kitty Catppuccin theme: ensure themes directory exists via stow
+# Verify Kitty Catppuccin theme
 if [ ! -f "$HOME/.config/kitty/themes/catppuccin-macchiato.conf" ]; then
     warn "Kitty Catppuccin theme not found — check config/kitty/themes/"
 else

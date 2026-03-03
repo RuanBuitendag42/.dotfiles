@@ -2,6 +2,34 @@
 # Arch Linux
 SHELL := /bin/bash
 
+# ─── Stow Helper ────────────────────────────────────────────────
+# Detect-Backup-Stow: dry-run to find conflicts, back up regular
+# files, then stow cleanly. The repo is NEVER modified.
+# Usage: $(call stow_deploy,<package_dir>,<target_dir>,<extra_stow_flags>)
+define stow_deploy
+	@STOW_DIR="$(CURDIR)/$(1)"; \
+	TARGET_DIR="$(2)"; \
+	EXTRA_FLAGS="$(3)"; \
+	cd "$$STOW_DIR" && \
+	CONFLICTS=$$(stow -n --no-folding $$EXTRA_FLAGS -v -t "$$TARGET_DIR" . 2>&1 | \
+		grep 'existing target is neither a link nor a directory' | \
+		sed 's/.*existing target is neither a link nor a directory: //'); \
+	if [ -n "$$CONFLICTS" ]; then \
+		BACKUP_DIR="$$HOME/.dotfiles_backup/$$(date +%Y%m%d_%H%M%S)"; \
+		echo "  Conflicts found — backing up to $$BACKUP_DIR"; \
+		echo "$$CONFLICTS" | while IFS= read -r file; do \
+			SRC="$$TARGET_DIR/$$file"; \
+			if [ -f "$$SRC" ] && [ ! -L "$$SRC" ]; then \
+				DEST="$$BACKUP_DIR/$$file"; \
+				mkdir -p "$$(dirname "$$DEST")"; \
+				mv "$$SRC" "$$DEST"; \
+				echo "    Backed up: $$file"; \
+			fi; \
+		done; \
+	fi; \
+	cd "$$STOW_DIR" && stow -R --no-folding $$EXTRA_FLAGS -v -t "$$TARGET_DIR" .
+endef
+
 .PHONY: help install install-configs install-scripts backup status test clean update migrate packages-save packages-diff genesis-status genesis-validate
 
 # Default target
@@ -43,21 +71,18 @@ install: install-configs install-home install-scripts install-sddm
 install-configs:
 	@echo "Deploying application configs to ~/.config/..."
 	@mkdir -p ~/.config
-	@cd config && stow -R --adopt --no-folding --ignore='sddm' -v -t ~/.config .
-	@git checkout -- config/
+	$(call stow_deploy,config,$(HOME)/.config,--ignore='sddm')
 	@echo "Configs deployed!"
 
 install-home:
 	@echo "Deploying home dotfiles..."
-	@cd home && stow -R --adopt --no-folding -v -t ~ .
-	@git checkout -- home/
+	$(call stow_deploy,home,$(HOME),)
 	@echo "Home dotfiles deployed!"
 
 install-scripts:
 	@echo "Deploying scripts to ~/.local/bin/..."
 	@mkdir -p ~/.local/bin
-	@cd scripts && stow -R --adopt --no-folding -v -t ~ .
-	@git checkout -- scripts/
+	$(call stow_deploy,scripts,$(HOME),)
 	@chmod +x ~/.local/bin/*.sh 2>/dev/null || true
 	@echo "Scripts deployed!"
 
