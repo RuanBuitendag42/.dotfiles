@@ -62,7 +62,7 @@ For agents specific to one project repository.
    a. Create `.github/agents/`, `.github/instructions/`, `.github/prompts/` as needed
    b. Move/copy files to correct locations
    c. Verify files exist
-6. **Run validation script** if available: `bash genesis-skills/deploy-recipes/scripts/validate-deploy.sh`
+6. **Run validation script** if available from the `deploy-recipes` skill
 7. **Report deployment status**
 
 ## Deployment Report Format
