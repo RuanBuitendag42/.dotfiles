@@ -68,6 +68,7 @@ You are using this skill to create correctly structured Copilot customization fi
 | Agents | `~/.config/Code/User/prompts/*.agent.md` |
 | Instructions | `~/.config/Code/User/prompts/*.instructions.md` |
 | Prompts | `~/.config/Code/User/prompts/*.prompt.md` |
+| Skills | `~/.copilot/skills/<skill-name>/SKILL.md` |
 
 ### For Project-Level Deployment
 | Resource | Location |

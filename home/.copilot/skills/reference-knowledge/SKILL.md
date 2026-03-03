@@ -1,11 +1,11 @@
 ---
-description: 'Baked-in reference knowledge from the awesome-copilot repository — file types, naming rules, frontmatter schemas, and key URLs'
-applyTo: '**'
+name: reference-knowledge
+description: 'Copilot customization file types, naming rules, frontmatter schemas, tool sets, MCP patterns, and key URLs from awesome-copilot'
 ---
 
-# Genesis Reference — Awesome-Copilot Knowledge Base
+# Reference Knowledge — Awesome-Copilot Knowledge Base
 
-This is the baked-in reference for Agent Genesis. It contains critical knowledge from the [awesome-copilot](https://github.com/github/awesome-copilot) repository.
+This skill contains critical reference knowledge from the [awesome-copilot](https://github.com/github/awesome-copilot) repository. Load this skill when you need to create, validate, or reason about Copilot customization files.
 
 ## Seven Resource Types
 
@@ -34,6 +34,19 @@ This is the baked-in reference for Agent Genesis. It contains critical knowledge
 ### Prompt: `description` (recommended), `agent` (recommended)
 ### Skill: `name` (required, match folder), `description` (required)
 
+## Handoff Object Schema
+
+Each entry in the `handoffs` array MUST have all three properties:
+
+```yaml
+handoffs:
+  - label: 'Display Label'       # required — shown in UI
+    agent: 'target-agent-name'    # required — filename without .agent.md
+    prompt: 'What to tell the target agent'  # required — context for the handoff
+```
+
+**Missing `prompt` causes a lint error.** Always include a descriptive prompt that tells the target agent what task to perform.
+
 ## File Placement Quick Reference
 
 | Target | Agents | Instructions | Prompts | MCP |
@@ -47,7 +60,35 @@ This is the baked-in reference for Agent Genesis. It contains critical knowledge
 - **No `tools` key** = ALL tools enabled
 - **`tools: []`** = ALL tools disabled
 - **`tools: ['specific']`** = Only listed tools
-- **Unrecognized names** silently ignored
+- **Unrecognized names** cause lint warnings or errors
+
+### Built-in Tool Sets (use these in `tools` array)
+
+| Tool Set | Purpose |
+|----------|---------|
+| `'agent'` | Sub-agent invocation (`runSubagent`) — required for orchestrators |
+| `'read'` | File reading (`readFile`) |
+| `'edit'` | File editing (`createFile`, `replaceStringInFile`, etc.) |
+| `'search'` | File search, grep, semantic search |
+| `'execute'` | Terminal commands (`runInTerminal`) |
+| `'web'` | Web search and fetch |
+| `'todo'` | Todo list management |
+| `'vscode'` | VS Code commands and UI (askQuestions, etc.) |
+
+### MCP Server Tools
+
+To include tools from MCP servers, use the `servername/*` wildcard pattern:
+- `'fetch/*'` — all tools from the `fetch` MCP server
+- `'context7/*'` — all tools from the `context7` MCP server
+- `'github/*'` — all tools from the `github` MCP server
+
+**NEVER use individual MCP tool names** like `mcp_fetch_fetch` or `mcp_github_search_repositories` in the `tools` array — these cause lint errors. Always use the `servername/*` pattern.
+
+### The `agents` Property
+
+- **`agents: ["*"]`** — this agent can see and invoke ALL other agents in the workspace (required for orchestrators)
+- **Without `agents` key** — agent can only invoke agents listed in its `handoffs`
+- Use `agents: ["*"]` + `tools: ['agent']` for orchestrator agents that need to delegate to any specialist
 
 ## Key URLs
 
