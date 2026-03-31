@@ -79,6 +79,7 @@ pyenv
 docker
 docker-compose
 yarn
+nodejs-lts-jod
 
 # Browsers
 

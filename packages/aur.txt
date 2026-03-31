@@ -21,6 +21,7 @@ zapzap
 # Development
 visual-studio-code-bin
 github-copilot-cli
+bitwarden-cli
 
 # Hyprland Extras
 pyprland

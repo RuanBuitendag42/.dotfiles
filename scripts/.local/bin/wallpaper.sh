@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ═══════════════════════════════════════════════════════════════
 #  侍  WALLPAPER.SH  ·  壁紙  ·  SAMURAI WALL SWITCHER
-#  Random wallpaper with swww transitions  ·  未来侍
+#  Random wallpaper with awww transitions  ·  未来侍
 # ═══════════════════════════════════════════════════════════════
 # Usage: wallpaper.sh           # random wallpaper, random transition
 #        wallpaper.sh <path>    # set specific wallpaper
@@ -30,7 +30,7 @@ set_wallpaper() {
     local img="$1"
     read -r trans angle <<< "$(pick_transition)"
 
-    swww img "$img" \
+    awww img "$img" \
         --transition-fps "$TRANSITION_FPS" \
         --transition-type "$trans" \
         --transition-angle "$angle" \
@@ -69,7 +69,7 @@ pick_random() {
 
     # Get current wallpaper to avoid immediate repeat
     local current
-    current=$(swww query 2>/dev/null | grep -oP 'image: \K.*' | head -1 || true)
+    current=$(awww query 2>/dev/null | grep -oP 'image: \K.*' | head -1 || true)
 
     # Read history, reset if all wallpapers have been shown
     local history_count=0

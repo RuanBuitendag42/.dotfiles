@@ -135,5 +135,18 @@ if command -v ionic &>/dev/null && type compdef &>/dev/null; then
   compdef __ionic ionic
 fi
 
+# Bitwarden CLI (optional) — lazy session caching
+if command -v bw &>/dev/null; then
+  # Clear stale session if set but no longer valid
+  if [[ -n "$BW_SESSION" ]] && ! bw unlock --check &>/dev/null; then
+    unset BW_SESSION
+  fi
+
+  # On-demand unlock (call manually when you need vault access)
+  bwunlock() {
+    local session
+    session="$(bw unlock --raw)" && export BW_SESSION="$session"
+  }
+fi
 
 . "$HOME/.local/share/../bin/env"

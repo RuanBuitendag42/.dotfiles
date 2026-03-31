@@ -1,9 +1,0 @@
-{
-  "hooks": [
-    {
-      "event": "EVENT_NAME: sessionStart | sessionEnd | userPromptSubmitted | preToolUse | postToolUse | errorOccurred",
-      "script": "./script-name.sh",
-      "description": "Brief description of what this hook does"
-    }
-  ]
-}
